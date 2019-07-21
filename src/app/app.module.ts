@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
+import { SanitizerPipe } from './sanitizer';
+
 @NgModule({
   imports:      [ BrowserModule ],
-  declarations: [ AppComponent ],
+  declarations: [ AppComponent, SanitizerPipe ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
