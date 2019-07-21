@@ -13,22 +13,19 @@
   padding   : 0;
 }
 
-tbody
-{
-  .descriptor
+tbody .descriptor
   {
     width       : auto;
     height      : 30px;
     line-height : 30px;
   }
 
-  .selector
+tbody .selector
   {
     height      : 30px;
     line-height : 30px;
     text-align  : center;
   }
-}
 
 .character-name
 {
@@ -51,3 +48,4 @@ tbody
 {
   text-decoration : line-through;
 }
+
