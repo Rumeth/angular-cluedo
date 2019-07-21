@@ -1,0 +1,47 @@
+<div class="container">
+<div class = "row">
+  <div class = "col-12 table-responsive pt-3">
+    <table *ngFor = "let type of types"
+           class = "table table-bordered">
+      <thead class = "thead-dark">
+        <tr>
+          <th class = "descriptor"
+              scope = "col">
+            {{ type.name }}
+          </th>
+          <th *ngFor = "let player of session?.players"
+              class = "selector"
+              [title] = "player.name"
+              scope = "col">
+            <img [src] = "imagePath + player.character.image"
+                 class = "img-thumbnail rounded-lg character-image" />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let piece of type?.pieces">
+          <th class = "descriptor"
+              scope = "row">
+            <div [ngClass] = "getPieceStatus(piece)"
+                 class = "character1-name text-truncate co1l-12">
+              {{ piece.name }}
+            </div>
+            <!--<div class = "float-left">
+              <img [src] = "imagePath + piece.image"
+                   class = "img-thumbnail rounded-lg character-image" />
+            </div>-->
+          </th>
+          <th (click) = "toggleStatus(cardStatus,piece)"
+              class = "selector"
+              *ngFor = "let cardStatus of piece.status"
+              [ngClass] = "{'cursor-pointer':!cardStatus.frozen}"
+              scope = "col">
+            <i [ngClass] = "getStatusIcon(cardStatus)"
+               class = "fas fa-lg"></i>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

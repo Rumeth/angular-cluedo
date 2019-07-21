@@ -1,0 +1,53 @@
+.descriptor
+{
+  min-width      : 110px;
+  padding        : 0 0 0 5px;
+  vertical-align : middle;
+}
+
+.selector
+{
+  max-width : 30px;
+  min-width : 30px;
+  width     : 30px;
+  padding   : 0;
+}
+
+tbody
+{
+  .descriptor
+  {
+    width       : auto;
+    height      : 30px;
+    line-height : 30px;
+  }
+
+  .selector
+  {
+    height      : 30px;
+    line-height : 30px;
+    text-align  : center;
+  }
+}
+
+.character-name
+{
+  padding-left  : 65px;
+  padding-right : 50px;
+  position      : absolute;
+  width         : 100%;
+  line-height   : 50px;
+  left          : 0;
+}
+
+.character-image
+{
+  width   : 30px;
+  height  : auto;
+  padding : 0;
+}
+
+.line-through
+{
+  text-decoration : line-through;
+}
