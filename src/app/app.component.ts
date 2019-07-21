@@ -290,21 +290,21 @@ export class AppComponent {
         },
         {
           "id": 8,
-          "name": "Ice Pick",
+          "name": "Dagger",
           "description": null,
           "image": "Weapons/IcePick.png",
           "type": 2
         },
         {
           "id": 9,
-          "name": "Poison",
+          "name": "Spanner",
           "description": null,
           "image": "Weapons/Poison.png",
           "type": 2
         },
         {
           "id": 10,
-          "name": "Poker",
+          "name": "Lead Pipe",
           "description": null,
           "image": "Weapons/Poker.png",
           "type": 2
@@ -318,7 +318,7 @@ export class AppComponent {
         },
         {
           "id": 12,
-          "name": "Shears",
+          "name": "Rope",
           "description": null,
           "image": "Weapons/Shears.png",
           "type": 2
@@ -331,7 +331,7 @@ export class AppComponent {
       "pieces": [
         {
           "id": 13,
-          "name": "Bedroom",
+          "name": "Dining Room",
           "description": null,
           "image": "Rooms/Bedroom.png",
           "type": 3
@@ -373,21 +373,21 @@ export class AppComponent {
         },
         {
           "id": 19,
-          "name": "Stairs",
+          "name": "Hall",
           "description": null,
           "image": "Rooms/Stairs.png",
           "type": 3
         },
         {
           "id": 20,
-          "name": "Studio",
+          "name": "Study",
           "description": null,
           "image": "Rooms/Studio.png",
           "type": 3
         },
         {
           "id": 21,
-          "name": "Trophy Hall",
+          "name": "Ballroom",
           "description": null,
           "image": "Rooms/TrophyHall.png",
           "type": 3
@@ -398,7 +398,7 @@ export class AppComponent {
 
   Status = Status;
 
-  imagePath: string='';
+  imagePath: string = '';
 
   constructor() {
   }
@@ -410,46 +410,46 @@ export class AppComponent {
   }
 
   getPieces(): void {
-        const shuffledTypes =this.shuffle(this.types);
+    const shuffledTypes = this.shuffle(this.types);
 
-        const playerHand: number[] = [];
+    const playerHand: number[] = [];
 
-        for (const hand of this.player.hand) {
-          playerHand.push(hand.id);
-        }
+    for (const hand of this.player.hand) {
+      playerHand.push(hand.id);
+    }
 
-        for (const type of shuffledTypes) {
-          type.pieces =this.shuffle(type.pieces);
+    for (const type of shuffledTypes) {
+      type.pieces = this.shuffle(type.pieces);
 
-          type.pieces.map((piece) => {
-            piece.status = [];
+      type.pieces.map((piece) => {
+        piece.status = [];
 
-            piece.frozen = false;
+        piece.frozen = false;
 
-            for (const player of this.session.players) {
-              const cardStatus = {
-                player: player.hash,
-                status: Status.EMPTY,
-                frozen: false
-              };
+        for (const player of this.session.players) {
+          const cardStatus = {
+            player: player.hash,
+            status: Status.EMPTY,
+            frozen: false
+          };
 
-              if (playerHand.indexOf(piece.id) > -1) {
-                cardStatus.status = Status.NO;
-                cardStatus.frozen = true;
+          if (playerHand.indexOf(piece.id) > -1) {
+            cardStatus.status = Status.NO;
+            cardStatus.frozen = true;
 
-                piece.frozen = true;
+            piece.frozen = true;
 
-                if (player.hash === this.player.hash) {
-                  cardStatus.status = Status.YES;
-                }
-              }
-
-              piece.status.push(cardStatus);
+            if (player.hash === this.player.hash) {
+              cardStatus.status = Status.YES;
             }
-          });
-        }
+          }
 
-        this.types = shuffledTypes;
+          piece.status.push(cardStatus);
+        }
+      });
+    }
+
+    this.types = shuffledTypes;
   }
 
   toggleStatus(cardStatus, piece): void {
@@ -545,27 +545,25 @@ export class AppComponent {
     return styles.join(' ');
   }
 
-   shuffle ( array : any[] ) : any[]
-  {
-    let currentIndex : number = array.length;
+  shuffle(array: any[]): any[] {
+    let currentIndex: number = array.length;
 
-    let temporaryValue : any;
+    let temporaryValue: any;
 
-    let randomIndex : number;
+    let randomIndex: number;
 
     // While there remain elements to shuffle...
-    while ( currentIndex !== 0 )
-    {
+    while (currentIndex !== 0) {
 
       // Pick a remaining element...
-      randomIndex = Math.floor ( Math.random () * currentIndex );
+      randomIndex = Math.floor(Math.random() * currentIndex);
 
       currentIndex -= 1;
 
       // And swap it with the current element.
-      temporaryValue = array[ currentIndex ];
-      array[ currentIndex ] = array[ randomIndex ];
-      array[ randomIndex ] = temporaryValue;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
 
     return array;
@@ -573,7 +571,6 @@ export class AppComponent {
 }
 
 
-export enum Status
-{
-  EMPTY , NO , DOUBT , YES
+export enum Status {
+  EMPTY, NO, DOUBT, YES
 }
