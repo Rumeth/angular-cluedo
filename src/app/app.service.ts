@@ -17,17 +17,17 @@ export class AppService
 
     getPieces () : Observable<Types[]>
     {
-        return this.httpClient.get <Types[]> ( '../mocks/pieces.json' );
+        return this.httpClient.get <Types[]> ( '../assets/mocks/pieces.json' );
     }
 
     getSession () : Observable<Session>
     {
-        return this.httpClient.get <Session> ( '../mocks/lounge-status.json' );
+        return this.httpClient.get <Session> ( '../assets/mocks/lounge-status.json' );
     }
 
     getPlayer () : Observable<Player>
     {
-        return this.httpClient.get <Player> ( '../mocks/player-status.json' );
+        return this.httpClient.get <Player> ( '../assets/mocks/player-status.json' );
     }
 
     shuffle ( array : any[] ) : any[]
