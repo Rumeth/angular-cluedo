@@ -10,7 +10,7 @@
   </div>
 </nav>
 <div *ngIf="!loading" class="container">
-	<div class="row mt-5">
+	<div class="row mt-5 mb-5">
 		<div class="col-12 table-responsive pt-3">
 			<table *ngFor="let type of types" class="table table-bordered">
 				<thead class="thead-dark">
@@ -21,33 +21,39 @@
 						<th *ngFor="let player of session?.players" class="selector" scope="col">
 							<img [src] = "player.character.image | sanitize"
                  class = "img-thumbnail rounded-lg character-image" />
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor = "let piece of type?.pieces">
-          <th class = "descriptor"
-              scope = "row">
-            <div [ngClass] = "getPieceStatus(piece)"
-                 class = "character1-name text-truncate co1l-12">
-              {{ piece.name }}
-            </div>
-            <!--<div class = "float-left">
-              <img [src] = "imagePath + piece.image"
-                   class = "img-thumbnail rounded-lg character-image" />
-            </div>-->
-          </th>
-          <th (click) = "toggleStatus(cardStatus,piece)"
-              class = "selector"
-              *ngFor = "let cardStatus of piece.status"
-              [ngClass] = "{'cursor-pointer':!cardStatus.frozen}"
-              scope = "col">
-            <i [ngClass] = "getStatusIcon(cardStatus)"
-               class = "fas fa-lg"></i>
-          </th>
-        </tr>
-      </tbody>
-    </table>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let piece of type?.pieces">
+            <th class = "descriptor"
+                scope = "row"
+                (click)="accuse(piece,type.pieces)">
+              <div [ngClass] = "getPieceStatus(piece)"
+                  class = "text-truncate">
+                {{ piece.name }}
+              </div>
+              <!--<div class = "float-left">
+                <img [src] = "imagePath + piece.image"
+                    class = "img-thumbnail rounded-lg character-image" />
+              </div>-->
+            </th>
+            <th (click) = "toggleStatus(cardStatus,piece)"
+                class = "selector"
+                *ngFor = "let cardStatus of piece.status"
+                [ngClass] = "{'cursor-pointer':!cardStatus.frozen}"
+                scope = "col">
+              <i [ngClass] = "getStatusIcon(cardStatus)"
+                class = "fas fa-lg"></i>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+<div class="fixed-bottom">
+  <button class="btn btn-lg btn-danger rounded-0 col-12" type="button" (click)="startAccusal()">
+    Accuse
+  </button>
 </div>

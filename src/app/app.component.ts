@@ -23,6 +23,8 @@ export class AppComponent {
 
   Status = Status;
 
+  accusing: boolean = false;
+
   constructor(private appService: AppService) {
   }
 
@@ -172,7 +174,7 @@ export class AppComponent {
     this.storeProgress();
   }
 
-  storeProgress() {
+  storeProgress(): void {
     localStorage.setItem('types', JSON.stringify(this.types));
   }
 
@@ -222,20 +224,37 @@ export class AppComponent {
       styles.push('text-danger');
     }
 
+    if(piece.accused){
+      styles.push('text-warning');
+    }
+
     return styles.join(' ');
   }
 
-  clearSession() {
+  clearSession(): void {
     localStorage.removeItem('session');
     localStorage.removeItem('player');
     localStorage.removeItem('types');
   }
 
-  restartSession() {
+  restartSession(): void {
     this.clearSession();
 
     this.loading = true;
 
     this.getSession();
+  }
+
+  startAccusal() {
+    this.accusing = true;
+  }
+
+  accuse(piece: Card, pieces: Card[]): void {
+    console.log(piece,pieces);
+    if (this.accusing) {
+      for (const currentPiece of pieces) {
+        piece.accused = currentPiece.id === piece.id;
+      }
+    }
   }
 }
