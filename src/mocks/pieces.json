@@ -1,0 +1,167 @@
+[
+    {
+        "id"     : 1 ,
+        "name"   : "Suspects" ,
+        "pieces" : [
+            {
+                "id"          : 1 ,
+                "name"        : "Miss Scarlett" ,
+                "description" : "A stock femme fatale, she is typically portrayed as young, cunning and attractive. Known as Miss Scarlet in North America after 1963, she rolls first in the game. Age 25." ,
+                "image"       : "Suspects/MsScarlett.png" ,
+                "type"        : 1
+            } ,
+            {
+                "id"          : 2 ,
+                "name"        : "Col. Mustard" ,
+                "description" : "A stock great white hunter and colonial imperialist, he is usually a dignified, dapper and dangerous military man. Originally Colonel Yellow, his name was changed before the game's first edition. He rolls second. Age 31." ,
+                "image"       : "Suspects/ColMustard.png" ,
+                "type"        : 1
+            } ,
+            {
+                "id"          : 3 ,
+                "name"        : "Mrs. White" ,
+                "description" : "Usually a frazzled servant, Mrs. White appeared in the film as a resident guest. Originally Nurse White and changed before publication of the first edition, she rolls third in the game. Age 62." ,
+                "image"       : "Suspects/MrsWhite.png" ,
+                "type"        : 1
+            } ,
+            {
+                "id"          : 4 ,
+                "name"        : "Rev. Green" ,
+                "description" : "Originally patented as \"the Rev. Mr. Green\" in Britain, Reverend Green is a hypocritical Anglican priest who wavers when the subject is murder. In North America he is Mr. Green, who has taken money-oriented roles from mobster to businessman. Parker Brothers insisted on the name change, believing that the American public would object to a parson as a murder suspect.[1] In some later UK versions of the game, he was also renamed Mr. Green. He rolls fourth. Age 53." ,
+                "image"       : "Suspects/RevGreen.png" ,
+                "type"        : 1
+            } ,
+            {
+                "id"          : 5 ,
+                "name"        : "Ms. Peacock" ,
+                "description" : "A grande dame, an elderly, still-attractive woman who nearly always maintains her dignity and rolls fifth in the game. Age 45." ,
+                "image"       : "Suspects/MsPeacock.png" ,
+                "type"        : 1
+            } ,
+            {
+                "id"          : 6 ,
+                "name"        : "Prof. Plum" ,
+                "description" : "A quick-witted, young (or middle-aged) professor with a bow tie and glasses, he rolls last in the game. Age 37." ,
+                "image"       : "Suspects/ProfPlum.png" ,
+                "type"        : 1
+            }
+        ]
+    } ,
+    {
+        "id"     : 2 ,
+        "name"   : "Weapons" ,
+        "pieces" : [
+            {
+                "id"          : 7 ,
+                "name"        : "Candlestick" ,
+                "description" : null ,
+                "image"       : "Weapons/Candlestick.png" ,
+                "type"        : 2
+            } ,
+            {
+                "id"          : 8 ,
+                "name"        : "Dagger" ,
+                "description" : null ,
+                "image"       : "Weapons/IcePick.png" ,
+                "type"        : 2
+            } ,
+            {
+                "id"          : 9 ,
+                "name"        : "Spanner" ,
+                "description" : null ,
+                "image"       : "Weapons/Poison.png" ,
+                "type"        : 2
+            } ,
+            {
+                "id"          : 10 ,
+                "name"        : "Lead Piping" ,
+                "description" : null ,
+                "image"       : "Weapons/Poker.png" ,
+                "type"        : 2
+            } ,
+            {
+                "id"          : 11 ,
+                "name"        : "Revolver" ,
+                "description" : null ,
+                "image"       : "Weapons/Revolver.png" ,
+                "type"        : 2
+            } ,
+            {
+                "id"          : 12 ,
+                "name"        : "Rope" ,
+                "description" : null ,
+                "image"       : "Weapons/Shears.png" ,
+                "type"        : 2
+            }
+        ]
+    } ,
+    {
+        "id"     : 3 ,
+        "name"   : "Rooms" ,
+        "pieces" : [
+            {
+                "id"          : 13 ,
+                "name"        : "Dining Room" ,
+                "description" : null ,
+                "image"       : "Rooms/Bedroom.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 14 ,
+                "name"        : "Billiards Room" ,
+                "description" : null ,
+                "image"       : "Rooms/Billiards.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 15 ,
+                "name"        : "Conservatory" ,
+                "description" : null ,
+                "image"       : "Rooms/Conservatory.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 16 ,
+                "name"        : "Kitchen" ,
+                "description" : null ,
+                "image"       : "Rooms/Kitchen.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 17 ,
+                "name"        : "Library" ,
+                "description" : null ,
+                "image"       : "Rooms/Library.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 18 ,
+                "name"        : "Lounge" ,
+                "description" : null ,
+                "image"       : "Rooms/Lounge.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 19 ,
+                "name"        : "Hall" ,
+                "description" : null ,
+                "image"       : "Rooms/Stairs.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 20 ,
+                "name"        : "Study" ,
+                "description" : null ,
+                "image"       : "Rooms/Studio.png" ,
+                "type"        : 3
+            } ,
+            {
+                "id"          : 21 ,
+                "name"        : "Ballroom" ,
+                "description" : null ,
+                "image"       : "Rooms/TrophyHall.png" ,
+                "type"        : 3
+            }
+        ]
+    }
+]
