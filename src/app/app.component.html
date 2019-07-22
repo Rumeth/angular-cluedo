@@ -10,7 +10,8 @@
   </div>
 </nav>
 <div *ngIf="!loading" class="container">
-	<div class="row mt-5 mb-5">
+	<div class="row mt-5 "
+  [ngClass]="{'mb-5': (!accusing && player.accusal.length !== types.length) || accusing}">
 		<div class="col-12 table-responsive pt-3">
 			<table *ngFor="let type of types" class="table table-bordered">
 				<thead class="thead-dark">
@@ -28,7 +29,7 @@
           <tr *ngFor = "let piece of type?.pieces">
             <th class = "descriptor"
                 scope = "row"
-                (click)="accuse(piece,type.pieces)">
+                (click)="accusePiece(piece,type.pieces)">
               <div [ngClass] = "getPieceStatus(piece)"
                   class = "text-truncate">
                 {{ piece.name }}
@@ -53,7 +54,15 @@
   </div>
 </div>
 <div class="fixed-bottom">
-  <button class="btn btn-lg btn-danger rounded-0 col-12" type="button" (click)="startAccusal()">
+  <button *ngIf="!accusing && player.accusal.length !== types.length" class="btn btn-lg btn-danger rounded-0 col-12" type="button" (click)="startAccusal()">
     Accuse
   </button>
+  <div *ngIf="accusing" class="btn-group col-12 p-0" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-lg btn-info rounded-0" (click)="cancelAccusal()">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-lg btn-success rounded-0" [disabled]="player.accusal.length !== types.length" (click)="confirmAccusal()">
+      Confirm
+    </button>
+  </div>
 </div>

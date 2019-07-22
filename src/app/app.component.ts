@@ -127,7 +127,7 @@ export class AppComponent {
   }
 
   toggleStatus(cardStatus: CardStatus, piece: Card): void {
-    if (!cardStatus.frozen) {
+    if (!cardStatus.frozen && !this.accusing) {
       const status: number[] = Object.values(Status)
         .filter((value: number) => !isNaN(value));
 
@@ -175,6 +175,8 @@ export class AppComponent {
   }
 
   storeProgress(): void {
+    localStorage.setItem('session', JSON.stringify(this.session));
+    localStorage.setItem('player', JSON.stringify(this.player));
     localStorage.setItem('types', JSON.stringify(this.types));
   }
 
@@ -211,7 +213,7 @@ export class AppComponent {
       styles.push('text-success');
       styles.push('line-through');
     }
-    
+
     if (piece.accused) {
       styles.push('text-warning');
     } else {
@@ -249,12 +251,53 @@ export class AppComponent {
     this.accusing = true;
   }
 
-  accuse(piece: Card, pieces: Card[]): void {
-    console.log(piece, pieces);
+  accusePiece(piece: Card, pieces: Card[]): void {
     if (this.accusing && !piece.frozen) {
       for (const currentPiece of pieces) {
         currentPiece.accused = currentPiece.id === piece.id;
       }
+
+      const accusal = [];
+
+      for (const pieceType of this.types) {
+        for (const currentPiece of pieceType.pieces) {
+          if (currentPiece.accused) {
+            accusal.push(currentPiece);
+          }
+        }
+      }
+
+      this.player.accusal = accusal;
     }
+  }
+
+  confirmAccusal(): void {
+    for (const pieceType of this.types) {
+      for (const currentPiece of pieceType.pieces) {
+        currentPiece.frozen = false;
+
+        for (const cardStatus of currentPiece.status) {
+          if (cardStatus.status !== Status.YES) {
+            cardStatus.frozen = true;
+          }
+        }
+      }
+    }
+
+    this.accusing = false;
+
+    this.storeProgress();
+  }
+
+  cancelAccusal(): void {
+    for (const pieceType of this.types) {
+      for (const currentPiece of pieceType.pieces) {
+        currentPiece.accused = false;
+      }
+    }
+
+    this.player.accusal = [];
+
+    this.accusing = false;
   }
 }
