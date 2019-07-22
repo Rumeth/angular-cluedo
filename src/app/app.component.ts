@@ -69,7 +69,7 @@ export class AppComponent {
       this.types = JSON.parse(localStorage.getItem('types'));
     } else {
       this.appService.getPieces()
-        .subscribe((types: Types[]) => this.processPieces);
+        .subscribe((types: Types[]) => this.processPieces(types));
     }
   }
 
@@ -217,5 +217,17 @@ export class AppComponent {
     }
 
     return styles.join(' ');
+  }
+
+  clearSession() {
+    localStorage.removeItem('session');
+    localStorage.removeItem('player');
+    localStorage.removeItem('types');
+  }
+
+  restartSession() {
+    this.clearSession();
+
+    this.getSession();
   }
 }
