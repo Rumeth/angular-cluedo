@@ -29,69 +29,93 @@ export class AppComponent {
   }
 
   getSession(): void {
-    this.appService.getSession()
-      .subscribe((session: Session) => {
-        this.session = session;
+    if (localStorage.getItem('session')) {
+      this.session = JSON.parse(localStorage.getItem('session'));
 
-        this.session.players = this.appService.shuffle(this.session.players);
+      this.getPlayer();
+    } else {
+      this.appService.getSession()
+        .subscribe((session: Session) => {
+          this.session = session;
 
-        this.getPlayer();
-      });
+          this.session.players = this.appService.shuffle(this.session.players);
+
+          localStorage.setItem('session', JSON.stringify(this.session));
+
+          this.getPlayer();
+        });
+    }
   }
 
   getPlayer(): void {
-    this.appService.getPlayer()
-      .subscribe((player: Player) => {
-        this.player = player;
+    if (localStorage.getItem('player')) {
+      this.player = JSON.parse(localStorage.getItem('player'));
 
-        this.getPieces();
-      });
+      this.getPieces();
+    } else {
+      this.appService.getPlayer()
+        .subscribe((player: Player) => {
+          this.player = player;
+
+          localStorage.setItem('player', JSON.stringify(this.player));
+
+          this.getPieces();
+        });
+    }
   }
 
   getPieces(): void {
-    this.appService.getPieces()
-      .subscribe((types: Types[]) => {
-        const shuffledTypes: Types[] = this.appService.shuffle(types);
+    if (localStorage.getItem('types')) {
+      this.types = JSON.parse(localStorage.getItem('types'));
+    } else {
+      this.appService.getPieces()
+        .subscribe((types: Types[]) => this.processPieces);
+    }
+  }
 
-        const playerHand: number[] = [];
+  processPieces(types: Types[]): void {
+    const shuffledTypes: Types[] = this.appService.shuffle(types);
 
-        for (const hand of this.player.hand) {
-          playerHand.push(hand.id);
-        }
+    const playerHand: number[] = [];
 
-        for (const type of shuffledTypes) {
-          type.pieces = this.appService.shuffle(type.pieces);
+    for (const hand of this.player.hand) {
+      playerHand.push(hand.id);
+    }
 
-          type.pieces.map((piece: Card) => {
-            piece.status = [];
+    for (const shuffledType of shuffledTypes) {
+      shuffledType.pieces = this.appService.shuffle(shuffledType.pieces);
 
-            piece.frozen = false;
+      shuffledType.pieces.map((piece: Card) => {
+        piece.status = [];
 
-            for (const player of this.session.players) {
-              const cardStatus: CardStatus = {
-                player: player.hash,
-                status: Status.EMPTY,
-                frozen: false
-              };
+        piece.frozen = false;
 
-              if (playerHand.indexOf(piece.id) > -1) {
-                cardStatus.status = Status.NO;
-                cardStatus.frozen = true;
+        for (const player of this.session.players) {
+          const cardStatus: CardStatus = {
+            player: player.hash,
+            status: Status.EMPTY,
+            frozen: false
+          };
 
-                piece.frozen = true;
+          if (playerHand.indexOf(piece.id) > -1) {
+            cardStatus.status = Status.NO;
+            cardStatus.frozen = true;
 
-                if (player.hash === this.player.hash) {
-                  cardStatus.status = Status.YES;
-                }
-              }
+            piece.frozen = true;
 
-              piece.status.push(cardStatus);
+            if (player.hash === this.player.hash) {
+              cardStatus.status = Status.YES;
             }
-          });
-        }
+          }
 
-        this.types = shuffledTypes;
+          piece.status.push(cardStatus);
+        }
       });
+    }
+
+    this.types = shuffledTypes;
+
+    localStorage.setItem('types', JSON.stringify(this.types));
   }
 
   toggleStatus(cardStatus: CardStatus, piece: Card): void {
@@ -128,6 +152,8 @@ export class AppComponent {
     }
 
     piece.frozen = true;
+
+    this.storeProgress();
   }
 
   unfreezePiece(piece: Card): void {
@@ -136,6 +162,12 @@ export class AppComponent {
     }
 
     piece.frozen = false;
+
+    this.storeProgress();
+  }
+
+  storeProgress() {
+    localStorage.setItem('types', JSON.stringify(this.types));
   }
 
   getStatusIcon(cardStatus: CardStatus): string {
