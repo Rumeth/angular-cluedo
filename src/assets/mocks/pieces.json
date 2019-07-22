@@ -108,7 +108,7 @@
             } ,
             {
                 "id"          : 14 ,
-                "name"        : "Billiards Room" ,
+                "name"        : "Billiard Room" ,
                 "description" : null ,
                 "image"       : "Rooms/Billiards.png" ,
                 "type"        : 3
