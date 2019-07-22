@@ -13,6 +13,8 @@ import { Types } from '../model/types.interface';
 })
 
 export class AppComponent {
+  loading: boolean = true;
+
   session: Session;
 
   player: Player;
@@ -67,6 +69,8 @@ export class AppComponent {
   getPieces(): void {
     if (localStorage.getItem('types')) {
       this.types = JSON.parse(localStorage.getItem('types'));
+
+      this.loading = false;
     } else {
       this.appService.getPieces()
         .subscribe((types: Types[]) => this.processPieces(types));
@@ -114,6 +118,8 @@ export class AppComponent {
     }
 
     this.types = shuffledTypes;
+
+    this.loading = false;
 
     localStorage.setItem('types', JSON.stringify(this.types));
   }
@@ -227,6 +233,8 @@ export class AppComponent {
 
   restartSession() {
     this.clearSession();
+
+    this.loading = true;
 
     this.getSession();
   }
