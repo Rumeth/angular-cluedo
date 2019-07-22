@@ -14,18 +14,18 @@
 }
 
 tbody .descriptor
-  {
-    width       : auto;
-    height      : 30px;
-    line-height : 30px;
-  }
+{
+  width       : auto;
+  height      : 30px;
+  line-height : 30px;
+}
 
 tbody .selector
-  {
-    height      : 30px;
-    line-height : 30px;
-    text-align  : center;
-  }
+{
+  height      : 30px;
+  line-height : 30px;
+  text-align  : center;
+}
 
 .character-name
 {
@@ -49,3 +49,8 @@ tbody .selector
   text-decoration : line-through;
 }
 
+.table-bordered thead th, 
+.table-bordered thead td 
+{
+    border-top-width: 2px;
+}
