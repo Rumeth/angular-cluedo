@@ -11,7 +11,6 @@
           </th>
           <th *ngFor = "let player of session?.players"
               class = "selector"
-              [title] = "player.name"
               scope = "col">
             <img [src] = "player.character.image | sanitize"
                  class = "img-thumbnail rounded-lg character-image" />
