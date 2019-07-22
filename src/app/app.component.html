@@ -5,7 +5,7 @@
   <div class="container px-0 px-md-3">
     <div class="navbar-brand"></div>
     <button class="btn btn-outline-danger" type="button" title="Clear" (click)="restartSession()">
-      <i class="fas fa-eraser"></i>
+      <i class="fas fa-eraser fa-lg"></i>
     </button>
   </div>
 </nav>
@@ -56,14 +56,14 @@
 </div>
 <div *ngIf="!loading" class="fixed-bottom">
   <button *ngIf="!accusing && player.accusal.length !== types.length" class="btn btn-lg btn-warning text-white rounded-0 col-12" type="button" title="Accuse" (click)="startAccusal()">
-    <i class="fas fa-user-secret"></i>
+    <i class="fas fa-user-secret fa-lg"></i>
   </button>
   <div *ngIf="accusing" class="btn-group col-12 p-0" role="group" aria-label="Basic example">
     <button type="button" class="btn btn-lg btn-danger rounded-0" title="Cancel" (click)="cancelAccusal()">
-    <i class="fas fa-times"></i>
+    <i class="fas fa-times fa-lg"></i>
     </button>
     <button type="button" class="btn btn-lg btn-success rounded-0" title="Confirm" [disabled]="player.accusal.length !== types.length" (click)="confirmAccusal()">
-    <i class="fas fa-check"></i>
+    <i class="fas fa-check fa-lg"></i>
     </button>
   </div>
 </div>
