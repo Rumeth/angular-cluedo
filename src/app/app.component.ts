@@ -238,11 +238,13 @@ export class AppComponent {
   }
 
   restartSession(): void {
-    this.clearSession();
+    if (window.confirm('Are you sure you want to clear everything?')) {
+      this.clearSession();
 
-    this.loading = true;
+      this.loading = true;
 
-    this.getSession();
+      this.getSession();
+    }
   }
 
   startAccusal() {
@@ -270,23 +272,25 @@ export class AppComponent {
   }
 
   confirmAccusal(): void {
-    for (const pieceType of this.types) {
-      for (const currentPiece of pieceType.pieces) {
-        currentPiece.frozen = false;
+    if (window.confirm('Are you sure you want to accuse?')) {
+      for (const pieceType of this.types) {
+        for (const currentPiece of pieceType.pieces) {
+          currentPiece.frozen = false;
 
-        for (const cardStatus of currentPiece.status) {
-          if (cardStatus.status !== Status.YES) {
-            cardStatus.frozen = true;
+          for (const cardStatus of currentPiece.status) {
+            if (cardStatus.status !== Status.YES) {
+              cardStatus.frozen = true;
+            }
           }
         }
       }
+
+      this.accusing = false;
+
+      this.storeProgress();
+
+      localStorage.setItem('player', JSON.stringify(this.player));
     }
-
-    this.accusing = false;
-
-    this.storeProgress();
-
-    localStorage.setItem('player', JSON.stringify(this.player));
   }
 
   cancelAccusal(): void {
