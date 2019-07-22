@@ -211,21 +211,21 @@ export class AppComponent {
       styles.push('text-success');
       styles.push('line-through');
     }
-
-    const shortlisted: number = piece.status.reduce((total: number, cardStatus: CardStatus) => {
-      if (cardStatus.status === Status.NO) {
-        return total + 1;
-      }
-
-      return total;
-    }, 0);
-
-    if (shortlisted === piece.status.length) {
-      styles.push('text-danger');
-    }
-
-    if(piece.accused){
+    
+    if (piece.accused) {
       styles.push('text-warning');
+    } else {
+      const shortlisted: number = piece.status.reduce((total: number, cardStatus: CardStatus) => {
+        if (cardStatus.status === Status.NO) {
+          return total + 1;
+        }
+
+        return total;
+      }, 0);
+
+      if (shortlisted === piece.status.length) {
+        styles.push('text-danger');
+      }
     }
 
     return styles.join(' ');
@@ -250,10 +250,10 @@ export class AppComponent {
   }
 
   accuse(piece: Card, pieces: Card[]): void {
-    console.log(piece,pieces);
-    if (this.accusing) {
+    console.log(piece, pieces);
+    if (this.accusing && !piece.frozen) {
       for (const currentPiece of pieces) {
-        piece.accused = currentPiece.id === piece.id;
+        currentPiece.accused = currentPiece.id === piece.id;
       }
     }
   }
