@@ -54,7 +54,7 @@
     </div>
   </div>
 </div>
-<div class="fixed-bottom">
+<div *ngIf="!loading" class="fixed-bottom">
   <button *ngIf="!accusing && player.accusal.length !== types.length" class="btn btn-lg btn-danger rounded-0 col-12" type="button" (click)="startAccusal()">
     Accuse
   </button>
