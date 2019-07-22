@@ -75,3 +75,7 @@ tbody .selector
   text-align: center;
   justify-content: center;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

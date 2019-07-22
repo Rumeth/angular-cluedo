@@ -20,8 +20,8 @@
 							{{ type.name }}
 						</th>
 						<th *ngFor="let player of session?.players" class="selector" scope="col">
-							<img [src] = "player.character.image | sanitize"
-                 class = "img-thumbnail rounded-lg character-image" />
+							<img class = "img-thumbnail rounded-lg character-image"
+                 [src] = "player.character.image | sanitize" />
             </th>
           </tr>
         </thead>
@@ -29,9 +29,10 @@
           <tr *ngFor = "let piece of type?.pieces">
             <th class = "descriptor"
                 scope = "row"
+                [ngClass] = "{'cursor-pointer':accusing && !piece.frozen}"
                 (click)="accusePiece(piece,type.pieces)">
-              <div [ngClass] = "getPieceStatus(piece)"
-                  class = "text-truncate">
+              <div class = "text-truncate"
+              [ngClass] = "getPieceStatus(piece)">
                 {{ piece.name }}
               </div>
               <!--<div class = "float-left">
@@ -39,13 +40,13 @@
                     class = "img-thumbnail rounded-lg character-image" />
               </div>-->
             </th>
-            <th (click) = "toggleStatus(cardStatus,piece)"
+            <th *ngFor = "let cardStatus of piece.status"
                 class = "selector"
-                *ngFor = "let cardStatus of piece.status"
+                scope = "col"
                 [ngClass] = "{'cursor-pointer':!cardStatus.frozen}"
-                scope = "col">
-              <i [ngClass] = "getStatusIcon(cardStatus)"
-                class = "fas fa-lg"></i>
+                (click) = "toggleStatus(cardStatus,piece)">
+              <i class = "fas fa-lg"
+              [ngClass] = "getStatusIcon(cardStatus)"></i>
             </th>
           </tr>
         </tbody>

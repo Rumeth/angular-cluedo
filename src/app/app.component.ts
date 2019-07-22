@@ -175,8 +175,6 @@ export class AppComponent {
   }
 
   storeProgress(): void {
-    localStorage.setItem('session', JSON.stringify(this.session));
-    localStorage.setItem('player', JSON.stringify(this.player));
     localStorage.setItem('types', JSON.stringify(this.types));
   }
 
@@ -287,6 +285,8 @@ export class AppComponent {
     this.accusing = false;
 
     this.storeProgress();
+
+    localStorage.setItem('player', JSON.stringify(this.player));
   }
 
   cancelAccusal(): void {
