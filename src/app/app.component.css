@@ -49,6 +49,12 @@ tbody .selector
   text-decoration : line-through;
 }
 
+.table-bordered th, 
+.table-bordered td 
+{
+    border: 1px solid #343a40;
+}
+
 .table-bordered thead th, 
 .table-bordered thead td 
 {
