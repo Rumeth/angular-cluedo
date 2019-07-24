@@ -3,9 +3,9 @@ import { Session } from './session.interface';
 import { Types } from './types.interface';
 
 export interface History {
-  player? : Player;
+  player : Player;
   
-  session? : Session;
+  session : Session;
   
-  types? : Types[];
+  types : Types[];
 }

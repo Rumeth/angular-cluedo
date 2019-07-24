@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { HistoryService } from './history.service';
+import { Player } from '../../model/player.interface';
+import { Session } from '../../model/session.interface';
+import { Types } from '../../model/types.interface';
 import { History } from '../../model/history.interface';
 
 @Component({
@@ -11,6 +14,14 @@ import { History } from '../../model/history.interface';
 })
 export class HistoryComponent implements OnInit {
   loading: boolean = true;
+
+  showSession: boolean = false;
+
+  session: Session;
+
+  player: Player;
+
+  types: Types[];
 
   history: History[] = [];
 
@@ -47,6 +58,10 @@ export class HistoryComponent implements OnInit {
   }
 
   loadSession(history: History) {
+    this.session = history.session;
+    this.player = history.player;
+    this.types = history.types;
 
+    this.showSession = true;
   }
 }
