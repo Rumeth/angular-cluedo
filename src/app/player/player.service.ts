@@ -6,10 +6,7 @@ import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable()
 export class PlayerService {
   public resetSubject: Subject<void> = new Subject<void>();
 

@@ -5,6 +5,7 @@ import { Card, CardStatus } from '../../model/card.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
+import { History } from '../../model/history.interface';
 
 @Component({
   selector: 'app-player',
@@ -134,7 +135,7 @@ export class PlayerComponent implements OnInit {
 
   storeProgress(): void {
     localStorage.setItem('types', JSON.stringify(this.types));
-  }  
+  }
 
   clearSession(): void {
     localStorage.removeItem('session');
@@ -199,7 +200,7 @@ export class PlayerComponent implements OnInit {
   }
 
   updateHistory(): void {
-    let history = [];
+    let history: History[] = [];
 
     if (localStorage.getItem('history')) {
       history = JSON.parse(localStorage.getItem('history'));

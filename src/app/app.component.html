@@ -5,9 +5,17 @@
         Cluedo
       </strong>
     </div>
-    <button class="btn btn-outline-danger" type="button" title="Clear" (click)="restartSession()">
-      <i class="fas fa-eraser fa-lg"></i>
-    </button>
+    <div>
+      <button *ngIf="currentUrl === '/player'" class="btn btn-outline-danger mr-3" type="button" title="Clear" (click)="restartSession()">
+        <i class="fas fa-eraser fa-lg"></i>
+      </button>
+      <button *ngIf="currentUrl !== '/player'"  class="btn btn-outline-warning" type="button" title="Cluedo" (click)="redirectToSession()">
+        <i class="fas fa-user-secret fa-lg"></i>
+      </button>
+      <button *ngIf="currentUrl !== '/history'"  class="btn btn-outline-info" type="button" title="History" (click)="redirectToHistory()">
+        <i class="fas fa-history fa-lg"></i>
+      </button>
+    </div>
   </div>
 </nav>
 <div *ngIf="!loading" class="container margin-top-navbar">

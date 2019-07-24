@@ -9,11 +9,18 @@ import { SanitizerPipe } from '../pipe/sanitizer';
 import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
 import { ChecklistComponent } from './checklist/checklist.component';
+import { HistoryComponent } from './history/history.component';
+import { HistoryService } from './history/history.service';
 
 const routes: Routes = [
   {
     path: 'player',
     component: PlayerComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'history',
+    component: HistoryComponent,
     pathMatch: 'full'
   },
   {
@@ -36,13 +43,15 @@ const routes: Routes = [
     AppComponent,
     SanitizerPipe,
     PlayerComponent,
-    ChecklistComponent
+    ChecklistComponent,
+    HistoryComponent
   ],
   bootstrap: [
     AppComponent
   ],
   providers: [
-    PlayerService
+    PlayerService,
+    HistoryService
   ]
 })
 
