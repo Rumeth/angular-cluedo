@@ -1,0 +1,59 @@
+<div *ngIf="loading" class="loading">
+	<i class="fas fa-sync fa-6x fa-spin"></i>
+</div>
+<div class="row"
+[ngClass]="{'margin-bottom-button': (!accusing && player.accusal.length !== types.length) || accusing}">
+  <div class="col-12 table-responsive pt-3">
+    <table *ngFor="let type of types" class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th class="descriptor" scope="col">
+            {{ type.name }}
+          </th>
+          <th *ngFor="let player of session?.players" class="selector" scope="col">
+            <img class = "img-thumbnail rounded-lg character-image"
+                [src] = "player.character.image | sanitize" />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let piece of type?.pieces">
+          <th class = "descriptor"
+              scope = "row"
+              [ngClass] = "{'cursor-pointer':accusing && !piece.frozen}"
+              (click)="accusePiece(piece,type.pieces)">
+            <div class = "text-truncate"
+            [ngClass] = "getPieceStatus(piece)">
+              {{ piece.name }}
+            </div>
+            <!--<div class = "float-left">
+              <img [src] = "imagePath + piece.image"
+                  class = "img-thumbnail rounded-lg character-image" />
+            </div>-->
+          </th>
+          <th *ngFor = "let cardStatus of piece.status"
+              class = "selector"
+              scope = "col"
+              [ngClass] = "{'cursor-pointer':!cardStatus.frozen}"
+              (click) = "toggleStatus(cardStatus,piece)">
+            <i class = "fas fa-lg"
+            [ngClass] = "getStatusIcon(cardStatus)"></i>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="!loading" class="fixed-bottom">
+  <button *ngIf="!accusing && player.accusal.length !== types.length" class="btn btn-lg btn-warning text-white rounded-0 col-12" type="button" title="Accuse" (click)="startAccusal()">
+    <i class="fas fa-user-secret fa-lg"></i>
+  </button>
+  <div *ngIf="accusing" class="btn-group col-12 p-0" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-lg btn-danger rounded-0" title="Cancel" (click)="cancelAccusal()">
+    <i class="fas fa-times fa-lg"></i>
+    </button>
+    <button type="button" class="btn btn-lg btn-success rounded-0" title="Confirm" [disabled]="player.accusal.length !== types.length" (click)="confirmAccusal()">
+    <i class="fas fa-check fa-lg"></i>
+    </button>
+  </div>
+</div>
