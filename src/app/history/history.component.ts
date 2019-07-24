@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { HistoryService } from './history.service';
 import { History } from '../../model/history.interface';
@@ -13,7 +14,7 @@ export class HistoryComponent implements OnInit {
 
   history: History[] = [];
 
-  constructor(private historyService: HistoryService) {
+  constructor(private historyService: HistoryService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -23,7 +24,23 @@ export class HistoryComponent implements OnInit {
   getHistory() {
     this.historyService.getHistory()
       .subscribe((history: History[]) => {
-        this.history = history;
+        const formattedHistory: History[] = [];
+
+        const dates: string[] = [];
+
+        for (const currentSession of history) {
+          const currentDate = this.datePipe.transform(currentSession.session.startedOn, 'yyyyMMdd');
+
+          if (dates.indexOf(currentDate) === -1) {
+            dates.push(currentDate);
+
+            formattedHistory.push({ ...currentSession, header: true });
+          }
+
+          formattedHistory.push(currentSession);
+        }
+
+        this.history = formattedHistory;
 
         this.loading = false;
       });

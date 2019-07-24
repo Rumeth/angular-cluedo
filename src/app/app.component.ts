@@ -15,7 +15,6 @@ export class AppComponent {
 
   constructor(private playerService: PlayerService, private router: Router) {
     router.events.subscribe((event: Event) => {
-      console.log(event);
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
       }

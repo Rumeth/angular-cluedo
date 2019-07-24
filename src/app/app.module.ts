@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 
@@ -50,6 +51,7 @@ const routes: Routes = [
     AppComponent
   ],
   providers: [
+    DatePipe,
     PlayerService,
     HistoryService
   ]
