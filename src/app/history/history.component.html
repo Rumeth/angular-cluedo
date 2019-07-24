@@ -30,5 +30,12 @@
   </table>
 </div>
 <div *ngIf="showSession" class="row">
+  <div class="col-12 pt-3">
+    <button class="btn btn-outline-info float-left" type="button" title="Clear" (click)="hideSession()">
+      <i class="fas fa-caret-left fa-lg"></i>
+      History
+    </button>
+    <div class="session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy hh:mm a' }}</div>
+  </div>
   <app-checklist class="col-12 p-0" [(session)]="session" [(player)]="player" [(types)]="types"></app-checklist>
 </div>

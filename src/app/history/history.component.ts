@@ -64,4 +64,8 @@ export class HistoryComponent implements OnInit {
 
     this.showSession = true;
   }
+
+  hideSession() {
+    this.showSession = false;
+  }
 }
