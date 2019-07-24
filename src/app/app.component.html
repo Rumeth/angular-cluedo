@@ -13,9 +13,9 @@
     </button>
   </div>
 </nav>
-<div *ngIf="!loading" class="container">
-	<div class="row mt-5 "
-  [ngClass]="{'mb-5': (!accusing && player.accusal.length !== types.length) || accusing}">
+<div *ngIf="!loading" class="container margin-top-navbar">
+	<div class="row"
+  [ngClass]="{'margin-bottom-button': (!accusing && player.accusal.length !== types.length) || accusing}">
 		<div class="col-12 table-responsive pt-3">
 			<table *ngFor="let type of types" class="table table-bordered">
 				<thead class="thead-dark">
