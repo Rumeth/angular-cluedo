@@ -40,6 +40,8 @@ export class AppComponent {
     } else {
       this.appService.getSession()
         .subscribe((session: Session) => {
+          session.startedOn = new Date();
+
           this.session = session;
 
           this.session.players = this.appService.shuffle(this.session.players);
@@ -239,6 +241,12 @@ export class AppComponent {
 
   restartSession(): void {
     if (window.confirm('Are you sure you want to clear everything?')) {
+      if (this.session.endedOn === '') {
+        this.session.endedOn = new Date();
+      }
+
+      this.updateHistory();
+
       this.clearSession();
 
       this.loading = true;
@@ -287,6 +295,8 @@ export class AppComponent {
 
       this.accusing = false;
 
+      this.session.endedOn = new Date();
+
       this.storeProgress();
 
       localStorage.setItem('player', JSON.stringify(this.player));
@@ -303,5 +313,21 @@ export class AppComponent {
     this.player.accusal = [];
 
     this.accusing = false;
+  }
+
+  updateHistory(): void {
+    let history = [];
+
+    if (localStorage.getItem('history')) {
+      history = JSON.parse(localStorage.getItem('history'));
+    }
+
+    history.push({
+      session: this.session,
+      player: this.player,
+      types: this.types
+    });
+
+    localStorage.setItem('history', JSON.stringify(history));
   }
 }
