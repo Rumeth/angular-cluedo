@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SanitizerPipe } from '../pipe/sanitizer';
 import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     SanitizerPipe,
-    PlayerComponent
+    PlayerComponent,
+    ChecklistComponent
   ],
   bootstrap: [
     AppComponent
