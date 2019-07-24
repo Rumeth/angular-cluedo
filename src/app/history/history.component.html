@@ -12,14 +12,13 @@
     </thead>
     <tbody>
       <tr *ngFor = "let currentSession of history">
-        <th class = "descriptor cursor-pointer"
-            scope = "row"
-            (click)="loadSession(currentSession)">
+        <th *ngIf="currentSession.header" class = "descriptor bg-secondary text-white"
+            scope = "row">
           <div class = "text-truncate">
             {{ currentSession.session.startedOn | date:'dd MMMM yyyy' }}
           </div>
         </th>
-        <th class = "descriptor cursor-pointer"
+        <th *ngIf="!currentSession.header" class = "descriptor cursor-pointer"
             scope = "row"
             (click)="loadSession(currentSession)">
           <div class = "text-truncate">

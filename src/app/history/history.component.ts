@@ -45,4 +45,8 @@ export class HistoryComponent implements OnInit {
         this.loading = false;
       });
   }
+
+  loadSession(history: History) {
+
+  }
 }
