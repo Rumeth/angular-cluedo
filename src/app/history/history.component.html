@@ -32,10 +32,52 @@
 <div *ngIf="showSession" class="row">
   <div class="col-12 pt-3">
     <button class="btn btn-outline-info float-left" type="button" title="Clear" (click)="hideSession()">
-      <i class="fas fa-caret-left fa-lg"></i>
-      History
+      <i class="fas fa-arrow-left fa-lg"></i>
     </button>
-    <div class="session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy hh:mm a' }}</div>
+    <div class="session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy' }}</div>
+  </div>
+  <div class="col-12 table-responsive pt-3">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th class="descriptor" scope="col" colspan="2">
+            Session Details
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class = "descriptor"
+              scope = "row">
+            <div class = "text-truncate">
+             Started On
+            </div>
+          </th>
+          <th class = "descriptor"
+              scope = "row"
+              (click)="loadSession(currentSession)">
+            <div class = "text-truncate">
+              {{ session.startedOn | date:'hh:mm a' }}
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th class = "descriptor"
+              scope = "row">
+            <div class = "text-truncate">
+             Ended On
+            </div>
+          </th>
+          <th class = "descriptor"
+              scope = "row"
+              (click)="loadSession(currentSession)">
+            <div class = "text-truncate">
+              {{ session.endedOn | date:'hh:mm a' }}
+            </div>
+          </th>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <app-checklist class="col-12 p-0" [(session)]="session" [(player)]="player" [(types)]="types"></app-checklist>
 </div>
