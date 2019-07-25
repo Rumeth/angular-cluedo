@@ -31,7 +31,7 @@
 </div>
 <div *ngIf="showSession" class="row">
   <div class="col-12 pt-3">
-    <button class="btn btn-outline-info float-left" type="button" title="Clear" (click)="hideSession()">
+    <button class="btn btn-outline-info float-left" type="button" title="Back To History" (click)="hideSession()">
       <i class="fas fa-arrow-left fa-lg"></i>
     </button>
     <div class="session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy' }}</div>
