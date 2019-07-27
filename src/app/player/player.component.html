@@ -5,7 +5,10 @@
   <app-checklist class="col-12 p-0" [(session)]="session" [(player)]="player" [(types)]="types" [(accusing)]="accusing"></app-checklist>
 </div>
 <div *ngIf="!loading" class="fixed-bottom">
-  <button *ngIf="!accusing && player.accusal.length !== types.length" class="btn btn-lg btn-warning text-white rounded-0 col-12" type="button" title="Accuse" (click)="startAccusal()">
+  <button *ngIf="!accusing && player.accusal.length !== types.length && !started" class="btn btn-lg btn-success text-white rounded-0 col-12" type="button" title="Start" (click)="startGame()">
+    <i class="fas fa-play fa-lg"></i>
+  </button>
+  <button *ngIf="!accusing && player.accusal.length !== types.length && started" class="btn btn-lg btn-warning text-white rounded-0 col-12" type="button" title="Accuse" (click)="startAccusal()">
     <i class="fas fa-user-secret fa-lg"></i>
   </button>
   <div *ngIf="accusing" class="btn-group col-12 p-0" role="group" aria-label="Basic example">

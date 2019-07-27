@@ -12,6 +12,7 @@ import { PlayerService } from './player/player.service';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { HistoryComponent } from './history/history.component';
 import { HistoryService } from './history/history.service';
+import { ChecklistService } from './checklist/checklist.service';
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
   providers: [
     DatePipe,
     PlayerService,
-    HistoryService
+    HistoryService,
+    ChecklistService
   ]
 })
 

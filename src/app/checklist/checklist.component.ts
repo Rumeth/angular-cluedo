@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { ChecklistService } from './checklist.service';
+
 import { Status } from '../../constants/status';
 import { Card, CardStatus } from '../../model/card.interface';
 import { Player } from '../../model/player.interface';
@@ -22,7 +24,8 @@ export class ChecklistComponent implements OnInit {
 
   Status = Status;
 
-  constructor() { }
+  constructor(private checklistService: ChecklistService) {
+  }
 
   ngOnInit() {
   }
@@ -78,7 +81,7 @@ export class ChecklistComponent implements OnInit {
     }
 
     return styles.join(' ');
-  }  
+  }
 
   toggleStatus(cardStatus: CardStatus, piece: Card): void {
     if (!cardStatus.frozen && !this.accusing) {
@@ -98,38 +101,12 @@ export class ChecklistComponent implements OnInit {
       }
 
       if (cardStatus.status === Status.YES) {
-        this.freezePiece(piece);
+        this.checklistService.freezePiece(piece, this.types);
       }
       else {
-        this.unfreezePiece(piece);
+        this.checklistService.unfreezePiece(piece, this.types);
       }
     }
-  }
-
-  freezePiece(piece: Card): void {
-    for (const cardStatus of piece.status) {
-      if (cardStatus.status !== Status.YES) {
-        cardStatus.frozen = true;
-      }
-    }
-
-    piece.frozen = true;
-
-    this.storeProgress();
-  }
-
-  unfreezePiece(piece: Card): void {
-    for (const cardStatus of piece.status) {
-      cardStatus.frozen = false;
-    }
-
-    piece.frozen = false;
-
-    this.storeProgress();
-  }
-
-  storeProgress(): void {
-    localStorage.setItem('types', JSON.stringify(this.types));
   }
 
   accusePiece(piece: Card, pieces: Card[]): void {

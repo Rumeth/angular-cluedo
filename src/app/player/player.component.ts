@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Status } from '../../constants/status';
+
 import { PlayerService } from './player.service';
+
+import { Status } from '../../constants/status';
+
 import { Card, CardStatus } from '../../model/card.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
@@ -23,6 +26,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   Status = Status;
 
+  started: boolean = false;
+
   accusing: boolean = false;
 
   resetSubject;
@@ -36,6 +41,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.resetSubject = this.playerService.resetSubject.subscribe(() => {
       this.restartSession();
     });
+
+    if (localStorage.getItem('started')) {
+      this.started = JSON.parse(localStorage.getItem('started'));
+    }
   }
 
   ngOnDestroy(): void {
@@ -50,7 +59,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     } else {
       this.playerService.getSession()
         .subscribe((session: Session) => {
-          session.startedOn = new Date();
           session.endedOn = '';
 
           this.session = session;
@@ -136,17 +144,18 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
     this.loading = false;
 
-    localStorage.setItem('types', JSON.stringify(this.types));
-  }
+    this.playerService.storeProgress(this.types);
 
-  storeProgress(): void {
-    localStorage.setItem('types', JSON.stringify(this.types));
+    if (!this.started) {
+      this.playerService.freezeAll(this.types);
+    }
   }
 
   clearSession(): void {
     localStorage.removeItem('session');
     localStorage.removeItem('player');
     localStorage.removeItem('types');
+    localStorage.removeItem('started');
   }
 
   restartSession(): void {
@@ -155,14 +164,30 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.session.endedOn = new Date();
       }
 
-      this.updateHistory();
+      if (this.started) {
+        this.updateHistory();
+      }
 
       this.clearSession();
+
+      this.started = false;
 
       this.loading = true;
 
       this.getSession();
     }
+  }
+
+  startGame() {
+    this.started = true;
+
+    localStorage.setItem('started', JSON.stringify(this.started));
+
+    this.session.startedOn = new Date();
+
+    localStorage.setItem('session', JSON.stringify(this.session));
+
+    this.playerService.unfreezeAll(this.types);
   }
 
   startAccusal() {
@@ -187,7 +212,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
       this.session.endedOn = new Date();
 
-      this.storeProgress();
+      this.playerService.storeProgress(this.types);
 
       localStorage.setItem('player', JSON.stringify(this.player));
     }
@@ -206,18 +231,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   updateHistory(): void {
-    let history: History[] = [];
-
-    if (localStorage.getItem('history')) {
-      history = JSON.parse(localStorage.getItem('history'));
-    }
-
-    history.push({
-      session: this.session,
-      player: this.player,
-      types: this.types
-    });
-
-    localStorage.setItem('history', JSON.stringify(history));
+    this.playerService.updateHistory(this.session, this.player, this.types);
   }
 }

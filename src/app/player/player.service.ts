@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import { Status } from '../../constants/status';
+
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
@@ -15,6 +18,8 @@ export class PlayerService {
   private player: Player;
 
   private pieces: Types[];
+
+  Status = Status;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -78,5 +83,53 @@ export class PlayerService {
 
   reset() {
     this.resetSubject.next();
+  }
+
+  storeProgress(types: Types[]): void {
+    localStorage.setItem('types', JSON.stringify(types));
+  }
+
+  freezeAll(types: Types[]) {
+    for (const pieceType of types) {
+      for (const piece of pieceType.pieces) {
+        for (const cardStatus of piece.status) {
+          if (cardStatus.status !== Status.YES) {
+            cardStatus.frozen = true;
+          }
+        }
+
+        piece.frozen = true;
+      }
+    }
+
+    this.storeProgress(types);
+  }
+
+  unfreezeAll(types: Types[]) {
+    for (const pieceType of types) {
+      for (const piece of pieceType.pieces) {
+        for (const cardStatus of piece.status) {
+          if (cardStatus.status !== Status.YES) {
+            cardStatus.frozen = false;
+          }
+        }
+
+        piece.frozen = false;
+      }
+    }
+
+    this.storeProgress(types);
+  }
+
+  updateHistory(session: Session, player: Player, types: Types[]): void {
+    let history: History[] = [];
+
+    if (localStorage.getItem('history')) {
+      history = JSON.parse(localStorage.getItem('history'));
+    }
+
+    history.push({ session, player, types });
+
+    localStorage.setItem('history', JSON.stringify(history));
   }
 }
