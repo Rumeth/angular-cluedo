@@ -13,8 +13,10 @@ import { PlayerService } from './player/player.service';
 export class AppComponent {
   currentUrl: string;
 
+  routerEvents;
+
   constructor(private playerService: PlayerService, private router: Router) {
-    router.events.subscribe((event: Event) => {
+    this.routerEvents = router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
       }
@@ -22,6 +24,10 @@ export class AppComponent {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.routerEvents.unsubscribe();
   }
 
   restartSession() {

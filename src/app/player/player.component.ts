@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Status } from '../../constants/status';
 import { PlayerService } from './player.service';
 import { Card, CardStatus } from '../../model/card.interface';
@@ -12,7 +12,7 @@ import { History } from '../../model/history.interface';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
   loading: boolean = true;
 
   session: Session;
@@ -25,15 +25,21 @@ export class PlayerComponent implements OnInit {
 
   accusing: boolean = false;
 
+  resetSubject;
+
   constructor(private playerService: PlayerService) {
   }
 
   ngOnInit(): void {
     this.getSession();
 
-    this.playerService.resetSubject.subscribe(() => {
+    this.resetSubject = this.playerService.resetSubject.subscribe(() => {
       this.restartSession();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.resetSubject.unsubscribe();
   }
 
   getSession(): void {
