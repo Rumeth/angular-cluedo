@@ -39,7 +39,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.getSession();
 
     this.resetSubject = this.playerService.resetSubject.subscribe(() => {
-      this.restartSession();
+      this.confirmRestart();
     });
 
     if (localStorage.getItem('started')) {
@@ -158,24 +158,33 @@ export class PlayerComponent implements OnInit, OnDestroy {
     localStorage.removeItem('started');
   }
 
-  restartSession(): void {
-    if (window.confirm('Are you sure you want to clear everything?')) {
-      if (this.session.endedOn === '') {
-        this.session.endedOn = new Date();
+  confirmRestart(): void {
+    if (this.started) {
+      if (window.confirm('Are you sure you want to clear everything?')) {
+        this.restartSession();
       }
-
-      if (this.started) {
-        this.updateHistory();
-      }
-
-      this.clearSession();
-
-      this.started = false;
-
-      this.loading = true;
-
-      this.getSession();
     }
+    else {
+      this.restartSession();
+    }
+  }
+
+  restartSession(): void {
+    if (this.session.endedOn === '') {
+      this.session.endedOn = new Date();
+    }
+
+    if (this.started) {
+      this.updateHistory();
+    }
+
+    this.clearSession();
+
+    this.started = false;
+
+    this.loading = true;
+
+    this.getSession();
   }
 
   startGame() {
