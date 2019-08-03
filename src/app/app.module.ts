@@ -1,8 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
 import { DatePipe } from '@angular/common';
+
+import { AppRouting } from './app.routing';
 
 import { AppComponent } from './app.component';
 
@@ -14,32 +15,11 @@ import { HistoryComponent } from './history/history.component';
 import { HistoryService } from './history/history.service';
 import { ChecklistService } from './checklist/checklist.service';
 
-const routes: Routes = [
-  {
-    path: 'player',
-    component: PlayerComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'history',
-    component: HistoryComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: '',
-    redirectTo: '/player',
-    pathMatch: 'full'
-  }, {
-    path: '**',
-    redirectTo: '/player'
-  }
-];
-
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    AppRouting
   ],
   declarations: [
     AppComponent,
