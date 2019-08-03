@@ -4,13 +4,13 @@ import { Event, Router, NavigationEnd } from '@angular/router';
 import { PlayerService } from './player/player.service';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-cluedo',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  currentUrl: string;
+  currentUrl: string = '/player';
 
   routerEvents;
 
