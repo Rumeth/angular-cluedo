@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private playerService: PlayerService, private router: Router) {
     this.routerEvents = router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
+      if (event instanceof NavigationEnd && event.url !== '/') {
         this.currentUrl = event.url;
       }
     });
