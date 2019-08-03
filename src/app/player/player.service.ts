@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 
 import { Status } from '../../constants/status';
 
+import { History } from '../../model/history.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';

@@ -1,7 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component , OnDestroy , OnInit } from '@angular/core';
 import { Event, Router, NavigationEnd } from '@angular/router';
 
-import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { PlayerService } from './player/player.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   currentUrl: string;
 
   routerEvents;
