@@ -2,8 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes , RouterModule } from '@angular/router';
 import { HistoryComponent } from './history/history.component';
 import { PlayerComponent } from './player/player.component';
+import { SessionComponent } from './session/session.component';
 
 const routes : Routes = [
+  {
+    path      : 'session' ,
+    component : SessionComponent ,
+    pathMatch : 'full'
+  } ,
   {
     path      : 'player' ,
     component : PlayerComponent ,
@@ -16,12 +22,12 @@ const routes : Routes = [
   } ,
   {
     path       : '' ,
-    redirectTo : '/player' ,
+    redirectTo : '/session' ,
     pathMatch  : 'full'
   } ,
   {
     path       : '**' ,
-    redirectTo : '/player'
+    redirectTo : '/session'
   }
 ];
 

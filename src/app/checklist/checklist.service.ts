@@ -11,30 +11,4 @@ export class ChecklistService {
 
   constructor() {
   }
-
-  storeProgress(types: Types[]): void {
-    localStorage.setItem('types', JSON.stringify(types));
-  }
-
-  freezePiece(piece: Card, types: Types[]): void {
-    for (const cardStatus of piece.status) {
-      if (cardStatus.status !== Status.YES) {
-        cardStatus.frozen = true;
-      }
-    }
-
-    piece.frozen = true;
-
-    this.storeProgress(types);
-  }
-
-  unfreezePiece(piece: Card, types: Types[]): void {
-    for (const cardStatus of piece.status) {
-      cardStatus.frozen = false;
-    }
-
-    piece.frozen = false;
-
-    this.storeProgress(types);
-  }
 }

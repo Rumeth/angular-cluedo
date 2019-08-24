@@ -22,4 +22,6 @@ export interface CardStatus {
   status: number;
 
   frozen: boolean;
+
+  disabled: boolean;
 }

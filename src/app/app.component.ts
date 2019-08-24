@@ -10,7 +10,7 @@ import { PlayerService } from './player/player.service';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  currentUrl: string = '/player';
+  currentUrl: string = '/session';
 
   routerEvents;
 
@@ -38,6 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   redirectToSession() {
-    this.router.navigate(['player']);
+    this.router.navigate(['session']);
   }
 }

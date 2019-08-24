@@ -11,4 +11,6 @@ export interface Player
   hand? : Card[];
 
   accusal? : Card[];
+
+  disabled?: boolean;
 }

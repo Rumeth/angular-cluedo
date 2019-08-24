@@ -7,42 +7,42 @@
                 "id"          : 1 ,
                 "name"        : "Miss Scarlett" ,
                 "description" : "A stock femme fatale, she is typically portrayed as young, cunning and attractive. Known as Miss Scarlet in North America after 1963, she rolls first in the game. Age 25." ,
-                "image"       : "Suspects/MsScarlett.png" ,
+                "image"       : "MsScarlett" ,
                 "type"        : 1
             } ,
             {
                 "id"          : 2 ,
                 "name"        : "Col. Mustard" ,
                 "description" : "A stock great white hunter and colonial imperialist, he is usually a dignified, dapper and dangerous military man. Originally Colonel Yellow, his name was changed before the game's first edition. He rolls second. Age 31." ,
-                "image"       : "Suspects/ColMustard.png" ,
+                "image"       : "ColMustard" ,
                 "type"        : 1
             } ,
             {
                 "id"          : 3 ,
                 "name"        : "Mrs. White" ,
                 "description" : "Usually a frazzled servant, Mrs. White appeared in the film as a resident guest. Originally Nurse White and changed before publication of the first edition, she rolls third in the game. Age 62." ,
-                "image"       : "Suspects/MrsWhite.png" ,
+                "image"       : "MrsWhite" ,
                 "type"        : 1
             } ,
             {
                 "id"          : 4 ,
                 "name"        : "Rev. Green" ,
                 "description" : "Originally patented as \"the Rev. Mr. Green\" in Britain, Reverend Green is a hypocritical Anglican priest who wavers when the subject is murder. In North America he is Mr. Green, who has taken money-oriented roles from mobster to businessman. Parker Brothers insisted on the name change, believing that the American public would object to a parson as a murder suspect.[1] In some later UK versions of the game, he was also renamed Mr. Green. He rolls fourth. Age 53." ,
-                "image"       : "Suspects/RevGreen.png" ,
+                "image"       : "RevGreen" ,
                 "type"        : 1
             } ,
             {
                 "id"          : 5 ,
                 "name"        : "Mrs. Peacock" ,
                 "description" : "A grande dame, an elderly, still-attractive woman who nearly always maintains her dignity and rolls fifth in the game. Age 45." ,
-                "image"       : "Suspects/MsPeacock.png" ,
+                "image"       : "MrsPeacock" ,
                 "type"        : 1
             } ,
             {
                 "id"          : 6 ,
                 "name"        : "Prof. Plum" ,
                 "description" : "A quick-witted, young (or middle-aged) professor with a bow tie and glasses, he rolls last in the game. Age 37." ,
-                "image"       : "Suspects/ProfPlum.png" ,
+                "image"       : "ProfPlum" ,
                 "type"        : 1
             }
         ]

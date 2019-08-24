@@ -14,6 +14,10 @@ import { ChecklistComponent } from './checklist/checklist.component';
 import { HistoryComponent } from './history/history.component';
 import { HistoryService } from './history/history.service';
 import { ChecklistService } from './checklist/checklist.service';
+import { SessionComponent } from './session/session.component';
+import { SessionService } from './session/session.service';
+import { ImageService } from '../services/image.service';
+import { StorageService } from '../services/storage.service';
 
 @NgModule({
   imports: [
@@ -26,16 +30,21 @@ import { ChecklistService } from './checklist/checklist.service';
     SanitizerPipe,
     PlayerComponent,
     ChecklistComponent,
-    HistoryComponent
+    HistoryComponent,
+    SessionComponent
   ],
   bootstrap: [
     AppComponent
   ],
   providers: [
     DatePipe,
+    SanitizerPipe,
     PlayerService,
     HistoryService,
-    ChecklistService
+    ChecklistService,
+    SessionService,
+    ImageService,
+    StorageService
   ]
 })
 

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { ChecklistService } from './checklist.service';
+import { ImageService } from '../../services/image.service';
 
 import { Status } from '../../constants/status';
 import { Card, CardStatus } from '../../model/card.interface';
@@ -22,9 +23,15 @@ export class ChecklistComponent implements OnInit {
 
   @Input() accusing: boolean = false;
 
+  @Output() toggle = new EventEmitter();
+
+  @Output() accuse = new EventEmitter();
+
+  @Output() disable = new EventEmitter();
+
   Status = Status;
 
-  constructor(private checklistService: ChecklistService) {
+  constructor(private checklistService: ChecklistService, private imageService: ImageService) {
   }
 
   ngOnInit() {
@@ -84,48 +91,18 @@ export class ChecklistComponent implements OnInit {
   }
 
   toggleStatus(cardStatus: CardStatus, piece: Card): void {
-    if (!cardStatus.frozen && !this.accusing) {
-      const status: number[] = Object.values(Status)
-        .filter((value: number) => !isNaN(value));
-
-      let index: number = status.indexOf(cardStatus.status);
-
-      if (index > -1) {
-        index++;
-
-        if (index >= status.length) {
-          index = 0;
-        }
-
-        cardStatus.status = status[index];
-      }
-
-      if (cardStatus.status === Status.YES) {
-        this.checklistService.freezePiece(piece, this.types);
-      }
-      else {
-        this.checklistService.unfreezePiece(piece, this.types);
-      }
-    }
+    this.toggle.emit({ cardStatus, piece });
   }
 
   accusePiece(piece: Card, pieces: Card[]): void {
-    if (this.accusing && !piece.frozen) {
-      for (const currentPiece of pieces) {
-        currentPiece.accused = currentPiece.id === piece.id;
-      }
+    this.accuse.emit({ piece, pieces });
+  }
 
-      const accusal = [];
+  togglePlayer(player: Player): void {
+    this.disable.emit(player);
+  }
 
-      for (const pieceType of this.types) {
-        for (const currentPiece of pieceType.pieces) {
-          if (currentPiece.accused) {
-            accusal.push(currentPiece);
-          }
-        }
-      }
-
-      this.player.accusal = accusal;
-    }
+  getImage(image: string) {
+   return this.imageService.getImage(image);
   }
 }

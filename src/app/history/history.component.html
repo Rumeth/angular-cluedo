@@ -26,6 +26,13 @@
           </div>
         </th>
       </tr>
+      <tr *ngIf = "history.length < 1">
+        <th class = "descriptor text-muted text-center p-5"
+            scope = "row">
+            <i class="fas fa-exclamation-triangle fa-5x pb-5"></i>
+            <h1 class="m-0">No Records Found</h1>
+        </th>
+      </tr>
     </tbody>
   </table>
 </div>

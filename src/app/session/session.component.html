@@ -1,0 +1,62 @@
+<div *ngIf="loading" class="loading">
+	<i class="fas fa-sync fa-6x fa-spin"></i>
+</div>
+<div class="row margin-bottom-button">
+  <div *ngIf="step === 1" class="col-12 py-3 px-md1-0">
+    <h3 class="col-12 p-0 m-0">Select Your Character</h3>
+    <div class="row">
+      <div *ngFor="let currentPlayer of players" class="col-4 py-3 card-container">
+        <div class="card-flip" [ngClass]="{'reverse-flipped':player?.hash !== currentPlayer.hash}">
+          <div class="card front">
+            <img class="w-100 h-auto img-thumbnail p-0 cursor-pointer" [src]="getImage(currentPlayer.character.image)" (click)="setPlayer(currentPlayer)">
+          </div>
+          <div class="card back">
+            <img class="w-100 h-auto img-thumbnail p-0 cursor-pointer grayscale" [src]="getImage(currentPlayer.character.image)" (click)="setPlayer(currentPlayer)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="step === 2" class="col-12 py-3 px1-md-0">
+    <h3 class="col-12 p-0 m-0">Select Other Characters</h3>
+    <div class="row">
+      <div *ngFor="let currentPlayer of players" class="col-4 py-3 card-container">
+        <div class="card-flip" [ngClass]="{'reverse-flipped':otherPlayers.indexOf(currentPlayer.hash) === -1}">
+          <div class="card front">
+            <img class="w-100 h-auto img-thumbnail p-0 cursor-pointer" [src]="getImage(currentPlayer.character.image)" (click)="setOtherPlayers(currentPlayer)">
+          </div>
+          <div class="card back">
+            <img class="w-100 h-auto img-thumbnail p-0 cursor-pointer grayscale" [src]="getImage(currentPlayer.character.image)" (click)="setOtherPlayers(currentPlayer)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="step === 3" class="col-12 py-3 px-m1d-0">
+    <h3 class="col-12 p-0 m-0">Your Character</h3>
+    <div class="row">
+      <div class="col-4 py-3">
+        <img class="w-100 h-auto img-thumbnail p-0" [src]="getImage(player.character.image)">
+      </div>
+    </div>
+    <h3 class="col-12 p-0 m-0">Other Characters</h3>
+    <div class="row">
+      <div *ngFor="let currentPlayer of players" class="col-4 py-3">
+        <img class="w-100 h-auto img-thumbnail p-0" [src]="getImage(currentPlayer.character.image)">
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading" class="fixed-bottom">
+  <div class="btn-group col-12 p-0" role="group">
+    <button *ngIf="step !== 1" type="button" class="btn btn-lg btn-info rounded-0" title="Back" (click)="back()">
+      <i class="fas fa-chevron-left fa-lg"></i>
+    </button>
+    <button *ngIf="step !== 3" type="button" class="btn btn-lg btn-success rounded-0" title="Next" [disabled]="disableNext()" (click)="next()">
+      <i class="fas fa-chevron-right fa-lg"></i>
+    </button>
+    <button *ngIf="step === 3" class="btn btn-lg btn-success text-white rounded-0" type="button" title="Start" (click)="getPieces()">
+      <i class="fas fa-play fa-lg"></i>
+    </button>
+  </div>
+</div>
