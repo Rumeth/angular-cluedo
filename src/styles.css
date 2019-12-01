@@ -23,14 +23,14 @@ body
   text-decoration : line-through;
 }
 
-.table-bordered th, 
-.table-bordered td 
+.table-bordered th,
+.table-bordered td
 {
     border: 1px solid #343a40;
 }
 
-.table-bordered thead th, 
-.table-bordered thead td 
+.table-bordered thead th,
+.table-bordered thead td
 {
     border-top-width: 2px;
     border-bottom-width: 2px;
@@ -53,4 +53,8 @@ body
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.fa-lg {
+  line-height: 1.33333em;
 }
