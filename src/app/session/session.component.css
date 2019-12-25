@@ -49,6 +49,12 @@ img
     transform : rotateY(180deg);
 }
 
+.back .card-img-overlay
+{
+    z-index   : 1;
+    transform : rotate(180deg);
+}
+
 .card-container .card-flip.flipped
 {
     transform : rotateX(180deg);
