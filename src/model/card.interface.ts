@@ -1,27 +1,29 @@
-export interface Card {
-  id?: number;
+export interface Card
+{
+    id? : number;
 
-  name: string;
+    name : string;
 
-  description: string;
+    description : string;
 
-  image: string;
+    image : string;
 
-  type: number;
+    type : number;
 
-  accused?: boolean;
+    accused? : boolean;
 
-  frozen: boolean;
+    frozen : boolean;
 
-  status: CardStatus[];
+    status : CardStatus[];
 }
 
-export interface CardStatus {
-  player: string;
+export interface CardStatus
+{
+    player : string;
 
-  status: number;
+    status : number;
 
-  frozen: boolean;
+    frozen : boolean;
 
-  disabled: boolean;
+    disabled : boolean;
 }

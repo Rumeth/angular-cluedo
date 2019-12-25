@@ -2,9 +2,9 @@ import { Card } from './card.interface';
 
 export interface Types
 {
-  id? : number;
+    id? : number;
 
-  name : string;
+    name : string;
 
-  pieces? : Card[];
+    pieces? : Card[];
 }

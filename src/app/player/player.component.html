@@ -1,19 +1,42 @@
-<div *ngIf="loading" class="loading">
-	<i class="fas fa-sync fa-6x fa-spin"></i>
+<div *ngIf = "loading"
+     class = "loading">
+    <i class = "fas fa-sync fa-6x fa-spin"></i>
 </div>
-<div class="row" [ngClass]="{'margin-bottom-button': (!accusing && player?.accusal.length !== types?.length) || accusing}">
-  <app-checklist class="col-12 p-0" [(session)]="session" [(player)]="player" [(types)]="types" [(accusing)]="accusing" (toggle)="toggleStatus($event)" (accuse)="accusePiece($event)"></app-checklist>
+<div [ngClass] = "{'margin-bottom-button': (!accusing && player?.accusal.length !== types?.length) || accusing}"
+     class = "row">
+    <app-checklist (accuse) = "accusePiece($event)"
+                   (toggle) = "toggleStatus($event)"
+                   [(accusing)] = "accusing"
+                   [(player)] = "player"
+                   [(session)] = "session"
+                   [(types)] = "types"
+                   class = "col-12 p-0"></app-checklist>
 </div>
-<div *ngIf="!loading" class="fixed-bottom">
-  <button *ngIf="!accusing && player?.accusal.length !== types?.length && started" class="btn btn-lg btn-warning text-white rounded-0 col-12" type="button" title="Accuse" (click)="startAccusal()">
-    <i class="fas fa-user-secret fa-lg"></i>
-  </button>
-  <div *ngIf="accusing" class="btn-group col-12 p-0" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-lg btn-danger rounded-0" title="Cancel" (click)="cancelAccusal()">
-    <i class="fas fa-times fa-lg"></i>
+<div *ngIf = "!loading"
+     class = "fixed-bottom">
+    <button (click) = "startAccusal()"
+            *ngIf = "!accusing && player?.accusal.length !== types?.length && started"
+            class = "btn btn-lg btn-warning text-white rounded-0 col-12"
+            title = "Accuse"
+            type = "button">
+        <i class = "fas fa-user-secret fa-lg"></i>
     </button>
-    <button type="button" class="btn btn-lg btn-success rounded-0" title="Confirm" [disabled]="player?.accusal.length !== types?.length" (click)="confirmAccusal()">
-    <i class="fas fa-check fa-lg"></i>
-    </button>
-  </div>
+    <div *ngIf = "accusing"
+         aria-label = "Basic example"
+         class = "btn-group col-12 p-0"
+         role = "group">
+        <button (click) = "cancelAccusal()"
+                class = "btn btn-lg btn-danger rounded-0"
+                title = "Cancel"
+                type = "button">
+            <i class = "fas fa-times fa-lg"></i>
+        </button>
+        <button (click) = "confirmAccusal()"
+                [disabled] = "player?.accusal.length !== types?.length"
+                class = "btn btn-lg btn-success rounded-0"
+                title = "Confirm"
+                type = "button">
+            <i class = "fas fa-check fa-lg"></i>
+        </button>
+    </div>
 </div>

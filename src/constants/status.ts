@@ -1,4 +1,4 @@
 export enum Status
 {
-  EMPTY , NO , DOUBT , YES
+    EMPTY , NO , DOUBT , YES
 }

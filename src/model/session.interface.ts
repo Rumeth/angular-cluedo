@@ -2,21 +2,21 @@ import { Player } from './player.interface';
 
 export interface Session
 {
-  isActive? : boolean;
+    isActive? : boolean;
 
-  createdOn? : string | Date;
+    createdOn? : string | Date;
 
-  createdBy? : string;
+    createdBy? : string;
 
-  startedOn? : string | Date;
+    startedOn? : string | Date;
 
-  endedOn? : string | Date;
+    endedOn? : string | Date;
 
-  wonBy? : string;
+    wonBy? : string;
 
-  players? : Player[];
+    players? : Player[];
 
-  hash? : string;
+    hash? : string;
 
-  player? : Player;
+    player? : Player;
 }

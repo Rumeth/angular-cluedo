@@ -1,71 +1,83 @@
-import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
-import { HistoryService } from './history.service';
+import { Component , OnInit } from '@angular/core';
+import { History } from '../../model/history.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
-import { History } from '../../model/history.interface';
 
-@Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
-})
-export class HistoryComponent implements OnInit {
-  loading: boolean = true;
+import { HistoryService } from './history.service';
 
-  showSession: boolean = false;
+@Component ( {
+                 selector : 'app-history' ,
+                 templateUrl : './history.component.html' ,
+                 styleUrls : [ './history.component.css' ]
+             } )
+export class HistoryComponent implements OnInit
+{
+    loading : boolean = true;
 
-  session: Session;
+    showSession : boolean = false;
 
-  player: Player;
+    session : Session;
 
-  types: Types[];
+    player : Player;
 
-  history: History[] = [];
+    types : Types[];
 
-  constructor(private historyService: HistoryService, private datePipe: DatePipe) {
-  }
+    history : History[] = [];
 
-  ngOnInit() {
-    this.getHistory();
-  }
+    constructor ( private historyService : HistoryService , private datePipe : DatePipe )
+    {
+    }
 
-  getHistory() {
-    this.historyService.getHistory()
-      .subscribe((history: History[]) => {
-        const formattedHistory: History[] = [];
+    ngOnInit ()
+    {
+        this.getHistory ();
+    }
 
-        const dates: string[] = [];
+    getHistory ()
+    {
+        this.historyService.getHistory ()
+            .subscribe ( ( history : History[] ) =>
+                         {
+                             const formattedHistory : History[] = [];
 
-        for (const currentSession of history) {
-          const currentDate = this.datePipe.transform(currentSession.session.startedOn, 'yyyyMMdd');
+                             const dates : string[] = [];
 
-          if (dates.indexOf(currentDate) === -1) {
-            dates.push(currentDate);
+                             for ( const currentSession of history )
+                             {
+                                 const currentDate = this.datePipe.transform ( currentSession.session.startedOn , 'yyyyMMdd' );
 
-            formattedHistory.push({ ...currentSession, header: true });
-          }
+                                 if ( dates.indexOf ( currentDate ) === -1 )
+                                 {
+                                     dates.push ( currentDate );
 
-          formattedHistory.push(currentSession);
-        }
+                                     formattedHistory.push ( {
+                                                                 ...currentSession ,
+                                                                 header : true
+                                                             } );
+                                 }
 
-        this.history = formattedHistory;
+                                 formattedHistory.push ( currentSession );
+                             }
 
-        this.loading = false;
-      });
-  }
+                             this.history = formattedHistory;
 
-  loadSession(history: History) {
-    this.session = history.session;
-    this.player = history.player;
-    this.types = history.types;
+                             this.loading = false;
+                         } );
+    }
 
-    this.showSession = true;
-  }
+    loadSession ( history : History )
+    {
+        this.session = history.session;
+        this.player = history.player;
+        this.types = history.types;
 
-  hideSession() {
-    this.showSession = false;
-  }
+        this.showSession = true;
+    }
+
+    hideSession ()
+    {
+        this.showSession = false;
+    }
 }

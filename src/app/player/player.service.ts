@@ -1,87 +1,101 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { Status } from '../../constants/status';
+import { Card } from '../../model/card.interface';
 
 import { History } from '../../model/history.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
-import { Card, CardStatus } from '../../model/card.interface';
 
 import { StorageService } from '../../services/storage.service';
 
-@Injectable()
-export class PlayerService {
-  public resetSubject: Subject<void> = new Subject<void>();
+@Injectable ()
+export class PlayerService
+{
+    public resetSubject : Subject<void> = new Subject<void> ();
+    Status = Status;
+    private session : Session;
+    private player : Player;
+    private pieces : Types[];
 
-  private session: Session;
+    constructor ( private storageService : StorageService )
+    {
+    }
 
-  private player: Player;
+    reset ()
+    {
+        this.resetSubject.next ();
+    }
 
-  private pieces: Types[];
+    storeProgress ( key , value ) : void
+    {
+        this.storageService.storeProgress ( key , value );
+    }
 
-  Status = Status;
+    freezeAll ( types : Types[] )
+    {
+        for ( const pieceType of types )
+        {
+            for ( const piece of pieceType.pieces )
+            {
+                for ( const cardStatus of piece.status )
+                {
+                    //if (cardStatus.status !== Status.YES) {
+                    cardStatus.frozen = true;
+                    //}
+                }
 
-  constructor(private storageService: StorageService) {
-  }
+                piece.frozen = true;
+            }
+        }
 
-  reset() {
-    this.resetSubject.next();
-  }
+        this.storeProgress ( 'types' , types );
+    }
 
-  storeProgress(key, value): void {
-    this.storageService.storeProgress(key, value);
-  }
-
-  freezeAll(types: Types[]) {
-    for (const pieceType of types) {
-      for (const piece of pieceType.pieces) {
-        for (const cardStatus of piece.status) {
-          //if (cardStatus.status !== Status.YES) {
-          cardStatus.frozen = true;
-          //}
+    freezePiece ( piece : Card , types : Types[] ) : void
+    {
+        for ( const cardStatus of piece.status )
+        {
+            if ( cardStatus.status !== Status.YES )
+            {
+                cardStatus.frozen = true;
+            }
         }
 
         piece.frozen = true;
-      }
+
+        this.storeProgress ( 'types' , types );
     }
 
-    this.storeProgress('types', types);
-  }
+    unfreezePiece ( piece : Card , types : Types[] ) : void
+    {
+        for ( const cardStatus of piece.status )
+        {
+            cardStatus.frozen = false;
+        }
 
-  freezePiece(piece: Card, types: Types[]): void {
-    for (const cardStatus of piece.status) {
-      if (cardStatus.status !== Status.YES) {
-        cardStatus.frozen = true;
-      }
+        piece.frozen = false;
+
+        this.storeProgress ( 'types' , types );
     }
 
-    piece.frozen = true;
+    updateHistory ( session : Session , player : Player , types : Types[] ) : void
+    {
+        let history : History[] = [];
 
-    this.storeProgress('types', types);
-  }
+        if ( localStorage.getItem ( 'history' ) )
+        {
+            history = JSON.parse ( localStorage.getItem ( 'history' ) );
+        }
 
-  unfreezePiece(piece: Card, types: Types[]): void {
-    for (const cardStatus of piece.status) {
-      cardStatus.frozen = false;
+        history.push ( {
+                           session ,
+                           player ,
+                           types
+                       } );
+
+        this.storeProgress ( 'history' , history );
     }
-
-    piece.frozen = false;
-
-    this.storeProgress('types', types);
-  }
-
-  updateHistory(session: Session, player: Player, types: Types[]): void {
-    let history: History[] = [];
-
-    if (localStorage.getItem('history')) {
-      history = JSON.parse(localStorage.getItem('history'));
-    }
-
-    history.push({ session, player, types });
-
-    this.storeProgress('history', history);
-  }
 }

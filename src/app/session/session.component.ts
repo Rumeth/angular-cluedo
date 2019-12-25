@@ -1,200 +1,231 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { SessionService } from './session.service';
-import { ImageService } from '../../services/image.service';
 
 import { Status } from '../../constants/status';
 
-import { Card, CardStatus } from '../../model/card.interface';
+import { Card , CardStatus } from '../../model/card.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
-import { History } from '../../model/history.interface';
+import { ImageService } from '../../services/image.service';
 
-@Component({
-  selector: 'app-session',
-  templateUrl: './session.component.html',
-  styleUrls: ['./session.component.css']
-})
+import { SessionService } from './session.service';
 
-export class SessionComponent implements OnInit {
-  loading: boolean = true;
+@Component ( {
+                 selector    : 'app-session' ,
+                 templateUrl : './session.component.html' ,
+                 styleUrls   : [ './session.component.css' ]
+             } )
 
-  session: Session;
+export class SessionComponent implements OnInit
+{
+    loading : boolean = true;
 
-  player: Player;
+    session : Session;
 
-  players: Player[] = [];
+    player : Player;
 
-  otherPlayers: string[] = [];
+    players : Player[] = [];
 
-  types: Types[];
+    otherPlayers : string[] = [];
 
-  Status = Status;
+    types : Types[];
 
-  started: boolean = false;
+    Status = Status;
 
-  step: number = 1;
+    started : boolean = false;
 
-  constructor(private sessionService: SessionService, private router: Router, private imageService: ImageService) {
-  }
+    step : number = 1;
 
-  ngOnInit() {
-    if (localStorage.getItem('started')) {
-      this.redirectToPlayer();
-    } else {
-      this.getSession();
+    constructor ( private sessionService : SessionService , private router : Router , private imageService : ImageService )
+    {
     }
-  }
 
-  getSession(): void {
-    this.sessionService.getSession()
-      .subscribe((session: Session) => {
-        session.createdOn = new Date();
+    ngOnInit ()
+    {
+        if ( localStorage.getItem ( 'started' ) )
+        {
+            this.redirectToPlayer ();
+        }
+        else
+        {
+            this.getSession ();
+        }
+    }
 
-        session.endedOn = '';
+    getSession () : void
+    {
+        this.sessionService.getSession ()
+            .subscribe ( ( session : Session ) =>
+                         {
+                             session.createdOn = new Date ();
 
-        this.session = session;
+                             session.endedOn = '';
 
-        this.players = session.players;
+                             this.session = session;
+
+                             this.players = session.players;
+
+                             this.loading = false;
+                         } );
+    }
+
+    getPieces () : void
+    {
+        const players : Player[] = [];
+
+        for ( const player of this.session.players )
+        {
+            if ( this.otherPlayers.indexOf ( player.hash ) > -1 )
+            {
+                players[ this.otherPlayers.indexOf ( player.hash ) ] = player;
+            }
+        }
+
+        players.unshift ( this.player );
+
+        this.session.players = players;
+
+        this.sessionService.getPieces ()
+            .subscribe ( ( types : Types[] ) => this.processPieces ( types ) );
+    }
+
+    processPieces ( types : Types[] ) : void
+    {
+        const shuffledTypes : Types[] = this.sessionService.shuffle ( types );
+
+        for ( const shuffledType of shuffledTypes )
+        {
+            shuffledType.pieces = this.sessionService.shuffle ( shuffledType.pieces );
+
+            shuffledType.pieces.map ( ( piece : Card ) =>
+                                      {
+                                          piece.status = [];
+
+                                          piece.frozen = false;
+
+                                          for ( const player of this.session.players )
+                                          {
+                                              const cardStatus : CardStatus = {
+                                                  player   : player.hash ,
+                                                  status   : Status.EMPTY ,
+                                                  frozen   : false ,
+                                                  disabled : false
+                                              };
+
+                                              piece.status.push ( cardStatus );
+                                          }
+                                      } );
+        }
+
+        this.types = shuffledTypes;
 
         this.loading = false;
-      });
-  }
 
-  getPieces(): void {
-    const players: Player[] = [];
-
-    for (const player of this.session.players) {
-      if (this.otherPlayers.indexOf(player.hash) > -1) {
-        players[this.otherPlayers.indexOf(player.hash)] = player;
-      }
+        this.startGame ();
     }
 
-    players.unshift(this.player);
+    startGame ()
+    {
+        this.started = true;
 
-    this.session.players = players;
+        this.session.createdBy = this.player.hash;
 
-    this.sessionService.getPieces()
-      .subscribe((types: Types[]) => this.processPieces(types));
-  }
+        this.session.startedOn = new Date ();
 
-  processPieces(types: Types[]): void {
-    const shuffledTypes: Types[] = this.sessionService.shuffle(types);
+        this.sessionService.storeProgress ( 'started' , this.started );
 
-    for (const shuffledType of shuffledTypes) {
-      shuffledType.pieces = this.sessionService.shuffle(shuffledType.pieces);
+        this.sessionService.storeProgress ( 'player' , this.player );
 
-      shuffledType.pieces.map((piece: Card) => {
-        piece.status = [];
+        this.sessionService.storeProgress ( 'types' , this.types );
 
-        piece.frozen = false;
+        this.sessionService.storeProgress ( 'session' , this.session );
 
-        for (const player of this.session.players) {
-          const cardStatus: CardStatus = {
-            player: player.hash,
-            status: Status.EMPTY,
-            frozen: false,
-            disabled: false
-          };
+        this.redirectToPlayer ();
+    }
 
-          piece.status.push(cardStatus);
+    setPlayer ( player : Player ) : void
+    {
+        this.player = player;
+    }
+
+    setOtherPlayers ( player : Player ) : void
+    {
+        if ( this.otherPlayers.indexOf ( player.hash ) > -1 )
+        {
+            this.otherPlayers.splice ( this.otherPlayers.indexOf ( player.hash ) , 1 );
         }
-      });
-    }
-
-    this.types = shuffledTypes;
-
-    this.loading = false;
-
-    this.startGame();
-  }
-
-  startGame() {
-    this.started = true;
-
-    this.session.createdBy = this.player.hash;
-
-    this.session.startedOn = new Date();
-
-    this.sessionService.storeProgress('started', this.started);
-
-    this.sessionService.storeProgress('player', this.player);
-
-    this.sessionService.storeProgress('types', this.types);
-
-    this.sessionService.storeProgress('session', this.session);
-
-    this.redirectToPlayer();
-  }
-
-  setPlayer(player: Player): void {
-    this.player = player;
-  }
-
-  setOtherPlayers(player: Player): void {
-    if (this.otherPlayers.indexOf(player.hash) > -1) {
-      this.otherPlayers.splice(this.otherPlayers.indexOf(player.hash), 1);
-    } else {
-      this.otherPlayers.push(player.hash);
-    }
-  }
-
-  back() {
-    this.step--;
-
-    switch (this.step) {
-      case 1:
-        this.players = this.session.players.filter((player: Player) => player);
-        break;
-      case 2:
-        this.players = this.session.players.filter((player: Player) => player.hash !== this.player.hash);
-        break;
-    }
-  }
-
-  next() {
-    switch (this.step) {
-      case 1:
-        this.players = this.session.players.filter((player: Player) => player.hash !== this.player.hash);
-
-        if (this.otherPlayers.indexOf(this.player.hash) > -1) {
-          this.otherPlayers.splice(this.otherPlayers.indexOf(this.player.hash), 1);
+        else
+        {
+            this.otherPlayers.push ( player.hash );
         }
-        break;
-      case 2:
-        const players: Player[] = [];
+    }
 
-        for (const player of this.session.players) {
-          if (this.otherPlayers.indexOf(player.hash) > -1) {
-            players[this.otherPlayers.indexOf(player.hash)] = player;
-          }
+    back ()
+    {
+        this.step--;
+
+        switch ( this.step )
+        {
+            case 1:
+                this.players = this.session.players.filter ( ( player : Player ) => player );
+                break;
+            case 2:
+                this.players = this.session.players.filter ( ( player : Player ) => player.hash !== this.player.hash );
+                break;
+        }
+    }
+
+    next ()
+    {
+        switch ( this.step )
+        {
+            case 1:
+                this.players = this.session.players.filter ( ( player : Player ) => player.hash !== this.player.hash );
+
+                if ( this.otherPlayers.indexOf ( this.player.hash ) > -1 )
+                {
+                    this.otherPlayers.splice ( this.otherPlayers.indexOf ( this.player.hash ) , 1 );
+                }
+                break;
+            case 2:
+                const players : Player[] = [];
+
+                for ( const player of this.session.players )
+                {
+                    if ( this.otherPlayers.indexOf ( player.hash ) > -1 )
+                    {
+                        players[ this.otherPlayers.indexOf ( player.hash ) ] = player;
+                    }
+                }
+
+                this.players = players;
+                break;
         }
 
-        this.players = players;
-        break;
+        this.step++;
     }
 
-    this.step++;
-  }
-
-  disableNext() {
-    switch (this.step) {
-      case 1:
-        return !this.player;
-        break;
-      case 2:
-        return this.otherPlayers.length < 1;
-        break;
+    disableNext ()
+    {
+        switch ( this.step )
+        {
+            case 1:
+                return !this.player;
+                break;
+            case 2:
+                return this.otherPlayers.length < 1;
+                break;
+        }
     }
-  }
 
-  redirectToPlayer() {
-    this.router.navigate(['player']);
-  }
+    redirectToPlayer ()
+    {
+        this.router.navigate ( [ 'player' ] );
+    }
 
-  getImage(image: string) {
-    return this.imageService.getImage(image);
-  }
+    getImage ( image : string )
+    {
+        return this.imageService.getImage ( image );
+    }
 }

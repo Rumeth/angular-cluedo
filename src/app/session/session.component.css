@@ -1,50 +1,60 @@
-img {
-  border-radius: 0.5rem !important;
+img
+{
+    border-radius : 0.5rem !important;
 }
 
-.grayscale {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+.grayscale
+{
+    -webkit-filter : grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter         : grayscale(100%);
 }
 
-.card {
-  background: none;
-  border: none;
+.card
+{
+    background : none;
+    border     : none;
 }
 
 /* Visit https://nicolaskadis.info/projects/pure-css-flip-cards-using-bootstrap-4-and-css-grid-no-js for an explanation */
 
-.card-container {
-  display: grid;
-  perspective: 1000px;
+.card-container
+{
+    display     : grid;
+    perspective : 1000px;
 }
 
-.card-flip {
-  display: grid;
-  grid-template: 1fr / 1fr;
-  grid-template-areas: "frontAndBack";
-  transform-style: preserve-3d;
-  transition: all 0.7s ease;
+.card-flip
+{
+    display             : grid;
+    grid-template       : 1fr / 1fr;
+    grid-template-areas : "frontAndBack";
+    transform-style     : preserve-3d;
+    transition          : all 0.7s ease;
 }
 
-.card-flip div {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
+.card-flip div
+{
+    backface-visibility : hidden;
+    transform-style     : preserve-3d;
 }
 
-.front {
-  grid-area: frontAndBack;
+.front
+{
+    grid-area : frontAndBack;
 }
 
-.back {
-  grid-area: frontAndBack;
-  transform: rotateY(180deg);
+.back
+{
+    grid-area : frontAndBack;
+    transform : rotateY(180deg);
 }
 
-.card-container .card-flip.flipped {
-  transform: rotateX(180deg);
+.card-container .card-flip.flipped
+{
+    transform : rotateX(180deg);
 }
 
-.card-container .card-flip.reverse-flipped {
-  transform: rotateX(-180deg);
+.card-container .card-flip.reverse-flipped
+{
+    transform : rotateX(-180deg);
 }

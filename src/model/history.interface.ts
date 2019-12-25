@@ -4,11 +4,11 @@ import { Types } from './types.interface';
 
 export interface History
 {
-  header? : boolean;
+    header? : boolean;
 
-  player : Player;
+    player : Player;
 
-  session : Session;
+    session : Session;
 
-  types : Types[];
+    types : Types[];
 }

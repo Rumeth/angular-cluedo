@@ -1,13 +1,13 @@
 {
-  "name"      : "Player 1" ,
-  "hash"      : "Player1Hash" ,
-  "character" : {
-    "id"          : 2 ,
-    "name"        : "Colonel Mustard" ,
-    "description" : "A stock great white hunter and colonial imperialist, he is usually a dignified, dapper and dangerous military man. Originally Colonel Yellow, his name was changed before the game's first edition. He rolls second. Age 31." ,
-    "image"       : "Suspects/ColMustard.png" ,
-    "type"        : 1
-  } ,
-  "hand"      : [ ] ,
-  "accusal"   : [ ]
+    "name"      : "Player 1" ,
+    "hash"      : "Player1Hash" ,
+    "character" : {
+        "id"          : 2 ,
+        "name"        : "Colonel Mustard" ,
+        "description" : "A stock great white hunter and colonial imperialist, he is usually a dignified, dapper and dangerous military man. Originally Colonel Yellow, his name was changed before the game's first edition. He rolls second. Age 31." ,
+        "image"       : "Suspects/ColMustard.png" ,
+        "type"        : 1
+    } ,
+    "hand"      : [ ] ,
+    "accusal"   : [ ]
 }

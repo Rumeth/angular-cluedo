@@ -2,15 +2,15 @@ import { Card } from './card.interface';
 
 export interface Player
 {
-  name : string;
+    name : string;
 
-  hash : string;
+    hash : string;
 
-  character? : Card;
+    character? : Card;
 
-  hand? : Card[];
+    hand? : Card[];
 
-  accusal? : Card[];
+    accusal? : Card[];
 
-  disabled?: boolean;
+    disabled? : boolean;
 }

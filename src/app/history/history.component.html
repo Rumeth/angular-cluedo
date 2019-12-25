@@ -1,90 +1,104 @@
-<div *ngIf="loading" class="loading">
-	<i class="fas fa-sync fa-6x fa-spin"></i>
+<div *ngIf = "loading"
+     class = "loading">
+    <i class = "fas fa-sync fa-6x fa-spin"></i>
 </div>
-<div *ngIf="!showSession" class="col-12 table-responsive pt-3 p-0">
-  <table class="table table-bordered">
-    <thead class="thead-dark">
-      <tr>
-        <th class="descriptor" scope="col">
-          History
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor = "let currentSession of history">
-        <th *ngIf="currentSession.header" class = "descriptor bg-secondary text-white"
-            scope = "row">
-          <div class = "text-truncate">
-            {{ currentSession.session.startedOn | date:'dd MMMM yyyy' }}
-          </div>
-        </th>
-        <th *ngIf="!currentSession.header" class = "descriptor cursor-pointer"
-            scope = "row"
-            (click)="loadSession(currentSession)">
-          <div class = "text-truncate">
-            {{ currentSession.session.startedOn | date:'hh:mm a' }}
-          </div>
-        </th>
-      </tr>
-      <tr *ngIf = "history.length < 1">
-        <th class = "descriptor text-muted text-center p-5"
-            scope = "row">
-            <i class="fas fa-exclamation-triangle fa-5x pb-5"></i>
-            <h1 class="m-0">No Records Found</h1>
-        </th>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div *ngIf="showSession" class="row">
-  <div class="col-12 pt-3">
-    <button class="btn btn-outline-info float-left" type="button" title="Back To History" (click)="hideSession()">
-      <i class="fas fa-arrow-left fa-lg"></i>
-    </button>
-    <div class="session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy' }}</div>
-  </div>
-  <div class="col-12 table-responsive pt-3">
-    <table class="table table-bordered mb-0">
-      <thead class="thead-dark">
-        <tr>
-          <th class="descriptor" scope="col" colspan="2">
-            Session Details
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th class = "descriptor"
-              scope = "row">
-            <div class = "text-truncate">
-             Started On
-            </div>
-          </th>
-          <th class = "descriptor"
-              scope = "row"
-              (click)="loadSession(currentSession)">
-            <div class = "text-truncate">
-              {{ session.startedOn | date:'hh:mm a' }}
-            </div>
-          </th>
-        </tr>
-        <tr>
-          <th class = "descriptor"
-              scope = "row">
-            <div class = "text-truncate">
-             Ended On
-            </div>
-          </th>
-          <th class = "descriptor"
-              scope = "row"
-              (click)="loadSession(currentSession)">
-            <div class = "text-truncate">
-              {{ session.endedOn | date:'hh:mm a' }}
-            </div>
-          </th>
-        </tr>
-      </tbody>
+<div *ngIf = "!showSession"
+     class = "col-12 table-responsive pt-3 p-0">
+    <table class = "table table-bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th class = "descriptor"
+                    scope = "col">
+                    History
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let currentSession of history">
+                <th *ngIf = "currentSession.header"
+                    class = "descriptor bg-secondary text-white"
+                    scope = "row">
+                    <div class = "text-truncate">
+                        {{ currentSession.session.startedOn | date:'dd MMMM yyyy' }}
+                    </div>
+                </th>
+                <th (click) = "loadSession(currentSession)"
+                    *ngIf = "!currentSession.header"
+                    class = "descriptor cursor-pointer"
+                    scope = "row">
+                    <div class = "text-truncate">
+                        {{ currentSession.session.startedOn | date:'hh:mm a' }}
+                    </div>
+                </th>
+            </tr>
+            <tr *ngIf = "history.length < 1">
+                <th class = "descriptor text-muted text-center p-5"
+                    scope = "row">
+                    <i class = "fas fa-exclamation-triangle fa-5x pb-5"></i>
+                    <h1 class = "m-0">No Records Found</h1>
+                </th>
+            </tr>
+        </tbody>
     </table>
-  </div>
-  <app-checklist class="col-12 p-0" [(session)]="session" [(player)]="player" [(types)]="types"></app-checklist>
+</div>
+<div *ngIf = "showSession"
+     class = "row">
+    <div class = "col-12 pt-3">
+        <button (click) = "hideSession()"
+                class = "btn btn-outline-info float-left"
+                title = "Back To History"
+                type = "button">
+            <i class = "fas fa-arrow-left fa-lg"></i>
+        </button>
+        <div class = "session-label text-center font-weight-bold">{{ session.startedOn | date:'dd MMMM yyyy' }}</div>
+    </div>
+    <div class = "col-12 table-responsive pt-3">
+        <table class = "table table-bordered mb-0">
+            <thead class = "thead-dark">
+                <tr>
+                    <th class = "descriptor"
+                        colspan = "2"
+                        scope = "col">
+                        Session Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class = "descriptor"
+                        scope = "row">
+                        <div class = "text-truncate">
+                            Started On
+                        </div>
+                    </th>
+                    <th (click) = "loadSession(currentSession)"
+                        class = "descriptor"
+                        scope = "row">
+                        <div class = "text-truncate">
+                            {{ session.startedOn | date:'hh:mm a' }}
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th class = "descriptor"
+                        scope = "row">
+                        <div class = "text-truncate">
+                            Ended On
+                        </div>
+                    </th>
+                    <th (click) = "loadSession(currentSession)"
+                        class = "descriptor"
+                        scope = "row">
+                        <div class = "text-truncate">
+                            {{ session.endedOn | date:'hh:mm a' }}
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-checklist [(player)] = "player"
+                   [(session)] = "session"
+                   [(types)] = "types"
+                   class = "col-12 p-0"></app-checklist>
 </div>

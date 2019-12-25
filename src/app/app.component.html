@@ -1,23 +1,35 @@
-<nav class="navbar fixed-top navbar-dark bg-dark border-bottom">
-	<div class="container px-0 px-md-3">
-		<div class="navbar-brand">
-			<strong>
-        Cluedo
-      </strong>
+<nav class = "navbar fixed-top navbar-dark bg-dark border-bottom">
+    <div class = "container px-0 px-md-3">
+        <div class = "navbar-brand">
+            <strong>
+                Cluedo
+            </strong>
+        </div>
+        <div>
+            <button (click) = "restartSession()"
+                    *ngIf = "currentUrl === '/player'"
+                    class = "btn btn-outline-danger"
+                    title = "Clear"
+                    type = "button">
+                <i class = "fas fa-eraser fa-lg"></i>
+            </button>
+            <button (click) = "redirectToSession()"
+                    *ngIf = "currentUrl !== '/session' && currentUrl !== '/player'"
+                    class = "btn btn-outline-light ml-3"
+                    title = "Cluedo"
+                    type = "button">
+                <i class = "fas fa-user-secret fa-lg"></i>
+            </button>
+            <button (click) = "redirectToHistory()"
+                    *ngIf = "currentUrl !== '/history'"
+                    class = "btn btn-outline-light ml-3"
+                    title = "History"
+                    type = "button">
+                <i class = "fas fa-history fa-lg"></i>
+            </button>
+        </div>
     </div>
-    <div>
-      <button *ngIf="currentUrl === '/player'" class="btn btn-outline-danger" type="button" title="Clear" (click)="restartSession()">
-        <i class="fas fa-eraser fa-lg"></i>
-      </button>
-      <button *ngIf="currentUrl !== '/session' && currentUrl !== '/player'"  class="btn btn-outline-light ml-3" type="button" title="Cluedo" (click)="redirectToSession()">
-        <i class="fas fa-user-secret fa-lg"></i>
-      </button>
-      <button *ngIf="currentUrl !== '/history'"  class="btn btn-outline-light ml-3" type="button" title="History" (click)="redirectToHistory()">
-        <i class="fas fa-history fa-lg"></i>
-      </button>
-    </div>
-  </div>
 </nav>
-<div class="container margin-top-navbar">
-  <router-outlet></router-outlet>
+<div class = "container margin-top-navbar">
+    <router-outlet></router-outlet>
 </div>

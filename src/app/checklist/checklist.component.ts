@@ -1,108 +1,132 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-
-import { ChecklistService } from './checklist.service';
-import { ImageService } from '../../services/image.service';
+import { Component , EventEmitter , Input , OnInit , Output } from '@angular/core';
 
 import { Status } from '../../constants/status';
-import { Card, CardStatus } from '../../model/card.interface';
+import { Card , CardStatus } from '../../model/card.interface';
 import { Player } from '../../model/player.interface';
 import { Session } from '../../model/session.interface';
 import { Types } from '../../model/types.interface';
+import { ImageService } from '../../services/image.service';
 
-@Component({
-  selector: 'app-checklist',
-  templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.css']
-})
-export class ChecklistComponent implements OnInit {
-  @Input() session: Session;
+import { ChecklistService } from './checklist.service';
 
-  @Input() player: Player;
+@Component ( {
+                 selector : 'app-checklist' ,
+                 templateUrl : './checklist.component.html' ,
+                 styleUrls : [ './checklist.component.css' ]
+             } )
+export class ChecklistComponent implements OnInit
+{
+    @Input () session : Session;
 
-  @Input() types: Types[];
+    @Input () player : Player;
 
-  @Input() accusing: boolean = false;
+    @Input () types : Types[];
 
-  @Output() toggle = new EventEmitter();
+    @Input () accusing : boolean = false;
 
-  @Output() accuse = new EventEmitter();
+    @Output () toggle = new EventEmitter ();
 
-  @Output() disable = new EventEmitter();
+    @Output () accuse = new EventEmitter ();
 
-  Status = Status;
+    @Output () disable = new EventEmitter ();
 
-  constructor(private checklistService: ChecklistService, private imageService: ImageService) {
-  }
+    Status = Status;
 
-  ngOnInit() {
-  }
-
-  getPieceStatus(piece: Card): string {
-    const styles: string[] = [];
-
-    const existingIndex: number = piece.status.findIndex((cardStatus: CardStatus) => {
-      return cardStatus.status === Status.YES;
-    });
-
-    if (existingIndex > -1) {
-      styles.push('text-success');
-      styles.push('line-through');
+    constructor ( private checklistService : ChecklistService , private imageService : ImageService )
+    {
     }
 
-    if (piece.accused) {
-      styles.push('text-warning');
-    } else {
-      const shortlisted: number = piece.status.reduce((total: number, cardStatus: CardStatus) => {
-        if (cardStatus.status === Status.NO) {
-          return total + 1;
+    ngOnInit ()
+    {
+    }
+
+    getPieceStatus ( piece : Card ) : string
+    {
+        const styles : string[] = [];
+
+        const existingIndex : number = piece.status.findIndex ( ( cardStatus : CardStatus ) =>
+                                                                {
+                                                                    return cardStatus.status === Status.YES;
+                                                                } );
+
+        if ( existingIndex > -1 )
+        {
+            styles.push ( 'text-success' );
+            styles.push ( 'line-through' );
         }
 
-        return total;
-      }, 0);
+        if ( piece.accused )
+        {
+            styles.push ( 'text-warning' );
+        }
+        else
+        {
+            const shortlisted : number = piece.status.reduce ( ( total : number , cardStatus : CardStatus ) =>
+                                                               {
+                                                                   if ( cardStatus.status === Status.NO )
+                                                                   {
+                                                                       return total + 1;
+                                                                   }
 
-      if (shortlisted === piece.status.length) {
-        styles.push('text-danger');
-      }
+                                                                   return total;
+                                                               } , 0 );
+
+            if ( shortlisted === piece.status.length )
+            {
+                styles.push ( 'text-danger' );
+            }
+        }
+
+        return styles.join ( ' ' );
     }
 
-    return styles.join(' ');
-  }
+    getStatusIcon ( cardStatus : CardStatus ) : string
+    {
+        const styles : string[] = [];
 
-  getStatusIcon(cardStatus: CardStatus): string {
-    const styles: string[] = [];
+        switch ( cardStatus.status )
+        {
+            case Status.YES:
+                styles.push ( 'fa-check' );
+                styles.push ( 'text-success' );
+                break;
+            case Status.NO:
+                styles.push ( 'fa-times' );
+                styles.push ( 'text-danger' );
+                break;
+            case Status.DOUBT:
+                styles.push ( 'fa-question' );
+                styles.push ( 'text-warning' );
+                break;
+            default:
+        }
 
-    switch (cardStatus.status) {
-      case Status.YES:
-        styles.push('fa-check');
-        styles.push('text-success');
-        break;
-      case Status.NO:
-        styles.push('fa-times');
-        styles.push('text-danger');
-        break;
-      case Status.DOUBT:
-        styles.push('fa-question');
-        styles.push('text-warning');
-        break;
-      default:
+        return styles.join ( ' ' );
     }
 
-    return styles.join(' ');
-  }
+    toggleStatus ( cardStatus : CardStatus , piece : Card ) : void
+    {
+        this.toggle.emit ( {
+                               cardStatus ,
+                               piece
+                           } );
+    }
 
-  toggleStatus(cardStatus: CardStatus, piece: Card): void {
-    this.toggle.emit({ cardStatus, piece });
-  }
+    accusePiece ( piece : Card , pieces : Card[] ) : void
+    {
+        this.accuse.emit ( {
+                               piece ,
+                               pieces
+                           } );
+    }
 
-  accusePiece(piece: Card, pieces: Card[]): void {
-    this.accuse.emit({ piece, pieces });
-  }
+    togglePlayer ( player : Player ) : void
+    {
+        this.disable.emit ( player );
+    }
 
-  togglePlayer(player: Player): void {
-    this.disable.emit(player);
-  }
-
-  getImage(image: string) {
-   return this.imageService.getImage(image);
-  }
+    getImage ( image : string )
+    {
+        return this.imageService.getImage ( image );
+    }
 }
