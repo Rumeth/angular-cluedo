@@ -67,5 +67,55 @@ img
 
 .card-img-overlay
 {
-    -webkit-text-stroke: 0.25px black;
+    -webkit-text-stroke : 0.25px black;
+    padding : 0.5rem;
+}
+
+.card-img-overlay .card-text
+{
+    font-size : 0.5rem;
+    line-height: 0.5rem;
+    display: block;
+}
+
+@media (min-width : 768px)
+{
+    .card-img-overlay
+    {
+        padding : 0.75rem;
+    }
+
+    .card-img-overlay .card-text
+    {
+        font-size : 1rem;
+        line-height: 1.5rem;
+    }
+}
+
+@media (min-width : 992px)
+{
+    .card-img-overlay
+    {
+        padding : 1rem;
+    }
+
+    .card-img-overlay .card-text
+    {
+        font-size : 1rem;
+        line-height: 1.5rem;
+    }
+}
+
+@media (min-width : 1200px)
+{
+    .card-img-overlay
+    {
+        padding : 1.25rem;
+    }
+
+    .card-img-overlay .card-text
+    {
+        font-size : 1rem;
+        line-height: 1.5rem;
+    }
 }
