@@ -64,3 +64,8 @@ img
 {
     transform : rotateX(-180deg);
 }
+
+.card-img-overlay
+{
+    -webkit-text-stroke: 0.25px black;
+}
