@@ -12,7 +12,7 @@
             } ,
             {
                 "id"          : 2 ,
-                "name"        : "Col. Mustard" ,
+                "name"        : "Colonel Mustard" ,
                 "description" : "A stock great white hunter and colonial imperialist, he is usually a dignified, dapper and dangerous military man. Originally Colonel Yellow, his name was changed before the game's first edition. He rolls second. Age 31." ,
                 "image"       : "ColMustard" ,
                 "type"        : 1
@@ -26,7 +26,7 @@
             } ,
             {
                 "id"          : 4 ,
-                "name"        : "Rev. Green" ,
+                "name"        : "Reverend Green" ,
                 "description" : "Originally patented as \"the Rev. Mr. Green\" in Britain, Reverend Green is a hypocritical Anglican priest who wavers when the subject is murder. In North America he is Mr. Green, who has taken money-oriented roles from mobster to businessman. Parker Brothers insisted on the name change, believing that the American public would object to a parson as a murder suspect.[1] In some later UK versions of the game, he was also renamed Mr. Green. He rolls fourth. Age 53." ,
                 "image"       : "RevGreen" ,
                 "type"        : 1
@@ -40,7 +40,7 @@
             } ,
             {
                 "id"          : 6 ,
-                "name"        : "Prof. Plum" ,
+                "name"        : "Professor Plum" ,
                 "description" : "A quick-witted, young (or middle-aged) professor with a bow tie and glasses, he rolls last in the game. Age 37." ,
                 "image"       : "ProfPlum" ,
                 "type"        : 1
