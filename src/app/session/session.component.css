@@ -67,7 +67,7 @@ img
 
 .card-img-overlay
 {
-    -webkit-text-stroke : 0.25px black;
+    text-shadow: 0 0 2px #000000;
     padding : 0.5rem;
 }
 
